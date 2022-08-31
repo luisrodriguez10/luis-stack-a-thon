@@ -1,6 +1,10 @@
 'use strict'
 
-const {db, models: {User} } = require('../server/db')
+const {db, models: {User, Role, Bus, Student} } = require('../server/db')
+const seedRoles = require('./seed-roles.json');
+const seedUsers = require('./seed-users.json');
+const seedBuses = require('./seed-buses.json');
+const seedStudents = require('./seed-students.json');
 
 /**
  * seed - this function clears the database, updates tables to
@@ -10,20 +14,26 @@ async function seed() {
   await db.sync({ force: true }) // clears db and matches models to tables
   console.log('db synced!')
 
-  // Creating Users
-  const users = await Promise.all([
-    User.create({ username: 'cody', password: '123' }),
-    User.create({ username: 'murphy', password: '123' }),
-  ])
+  await Promise.all(seedRoles.map(role => Role.create(role)));
+  await Promise.all(seedUsers.map(user => User.create(user)));
+  await Promise.all(seedBuses.map(bus => Bus.create(bus)));
+  await Promise.all(seedStudents.map(student => Student.create(student)));
 
-  console.log(`seeded ${users.length} users`)
-  console.log(`seeded successfully`)
-  return {
-    users: {
-      cody: users[0],
-      murphy: users[1]
-    }
-  }
+  // Creating Users
+  // const users = await Promise.all([
+  //   User.create({ username: 'cody', password: '123' }),
+  //   User.create({ username: 'murphy', password: '123' }),
+  // ])
+
+  // console.log(`seeded ${users.length} users`)
+  // console.log(`seeded successfully`)
+  // return {
+  //   users: {
+  //     cody: users[0],
+  //     murphy: users[1]
+  //   }
+  // }
+
 }
 
 /*
