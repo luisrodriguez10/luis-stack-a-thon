@@ -1,5 +1,6 @@
 body {
   font-family: sans-serif;
+  background-color: azure;
 }
 
 a {
@@ -10,12 +11,62 @@ label {
   display: block;
 }
 
-nav a {
-  display: inline-block;
+nav{
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
   margin: 1em;
+  background-color: beige;
 }
 
-form div {
+div#nav-driver{
+  flex: 0.5
+}
+
+div#nav-parent{
+  flex: 0.5
+} 
+
+div#nav-driver{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+div#nav-parent{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+div#welcome-message{
+  display: flex;
+  padding: 1rem;
+  margin: 1rem;
+  justify-content: space-evenly;
+}
+
+/* div h2{
+  text-align: left;
+  padding: 1rem;
+  margin: 1rem;
+} */
+
+div#home-driver{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+div#home-driver select{
+  padding: 0.5rem;
+  margin: 0.5rem;
+}
+
+div#home-driver table{
+  padding: 0.5rem;
+  margin: 0.5rem;
+}
+
+/* form div {
   margin: 1em;
   display: inline-block;
-}
+} */
