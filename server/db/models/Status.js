@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 const db = require("../db");
 
-const StudentBusStatus = db.define("studentBusStatus", {
+const Status = db.define("status", {
   status: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -11,4 +11,4 @@ const StudentBusStatus = db.define("studentBusStatus", {
   },
 });
 
-module.exports = StudentBusStatus;
+module.exports = Status;

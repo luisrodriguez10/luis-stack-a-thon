@@ -44,12 +44,6 @@ div#welcome-message{
   justify-content: space-evenly;
 }
 
-/* div h2{
-  text-align: left;
-  padding: 1rem;
-  margin: 1rem;
-} */
-
 div#home-driver{
   display: flex;
   flex-direction: column;
@@ -66,7 +60,31 @@ div#home-driver table{
   margin: 0.5rem;
 }
 
-/* form div {
-  margin: 1em;
-  display: inline-block;
-} */
+
+table {
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border: 2px solid rgb(89, 89, 85);
+}
+
+th,
+td {
+padding: 5px;
+text-align: center;
+}
+
+th{
+  background-color: white;
+}
+
+tr{
+  background-color:aliceblue ;
+}
+
+td{
+  font-weight: bolder;
+  color: black;
+}

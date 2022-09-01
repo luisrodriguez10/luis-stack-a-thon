@@ -4,9 +4,10 @@ import thunkMiddleware from "redux-thunk";
 import auth from "./auth";
 import buses from "./buses";
 import students from "./students";
-import status from './studentStatus';
+import statuses from './statuses';
+import users from './users';
 
-const reducer = combineReducers({ auth, buses, students, status });
+const reducer = combineReducers({ auth, buses, students, statuses, users });
 const middleware = applyMiddleware(
   thunkMiddleware,
   createLogger({ collapsed: true })
@@ -17,4 +18,5 @@ export default store;
 export * from "./auth";
 export * from "./buses";
 export * from './students';
-export * from './studentStatus';
+export * from './statuses';
+export * from './users';

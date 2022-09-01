@@ -6,14 +6,14 @@ const User = require("./models/User");
 const Role = require('./models/Role');
 const Bus = require('./models/Bus');
 const Student = require('./models/Student');
-const StudentBusStatus = require('./models/StudentBusStatus');
+const Status = require('./models/Status');
 
 //associations could go here!
 User.belongsTo(Role);
 Bus.belongsTo(User);
 Student.belongsTo(User);
 Student.belongsTo(Bus);
-Student.belongsTo(StudentBusStatus);
+Student.belongsTo(Status);
 
 module.exports = {
   db,
@@ -22,6 +22,6 @@ module.exports = {
     Role,
     Bus,
     Student,
-    StudentBusStatus
+    Status
   },
 };

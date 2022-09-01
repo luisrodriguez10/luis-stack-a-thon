@@ -3,7 +3,7 @@
         "firstName": "John",
         "lastName": "Doe",
         "grade": "11th Grade",
-        "studentBusStatusId": 1,
+        "statusId": 1,
         "userId": 2,
         "busId": 1
     },
@@ -11,7 +11,7 @@
         "firstName": "Jesus",
         "lastName": "King",
         "grade": "11th Grade",
-        "studentBusStatusId": 1,
+        "statusId": 1,
         "userId": 3,
         "busId": 1
     },
@@ -19,7 +19,7 @@
         "firstName": "Oliver",
         "lastName": "White",
         "grade": "11th Grade",
-        "studentBusStatusId": 1,
+        "statusId": 1,
         "userId": 4,
         "busId": 1
     },
@@ -27,7 +27,7 @@
         "firstName": "Kaby",
         "lastName": "Harvey",
         "grade": "11th Grade",
-        "studentBusStatusId": 1,
+        "statusId": 1,
         "userId": 5,
         "busId": 1
     },
@@ -35,7 +35,7 @@
         "firstName": "Raphael",
         "lastName": "Cerna",
         "grade": "11th Grade",
-        "studentBusStatusId": 1,
+        "statusId": 1,
         "userId": 6,
         "busId": 1
     }

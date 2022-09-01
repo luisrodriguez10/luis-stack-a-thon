@@ -1,10 +1,10 @@
 const router = require('express').Router();
-const { models: { StudentBusStatus }} = require('../db');
+const { models: { Status }} = require('../db');
 module.exports = router;
 
 router.get('/', async(req, res, next) =>{
     try {
-        res.send(await StudentBusStatus.findAll());
+        res.send(await Status.findAll());
 
     } catch (ex) {
         next(ex);
