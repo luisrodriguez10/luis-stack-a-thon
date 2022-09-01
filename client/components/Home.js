@@ -1,6 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { fetchBuses, fetchStatuses, fetchStudents, updateStudent, fetchUsers } from "../store";
+import {
+  fetchBuses,
+  fetchStatuses,
+  fetchStudents,
+  createStudentStatus,
+  fetchUsers,
+  fetchStudentsStatuses,
+} from "../store";
 
 class Home extends Component {
   constructor() {
@@ -14,12 +21,21 @@ class Home extends Component {
     this.props.fetchBuses();
     this.props.fetchStudents();
     this.props.fetchStatuses();
-    this.props.fetchUsers()
+    this.props.fetchUsers();
+    this.props.fetchStudentsStatuses();
   }
 
   render() {
     const { busId } = this.state;
-    const { auth, buses, students, statuses, updateStudent, users } = this.props;
+    const {
+      auth,
+      buses,
+      students,
+      statuses,
+      createStudentStatus,
+      users,
+      studentsStatuses,
+    } = this.props;
 
     let driverBuses;
     let studentsBus;
@@ -33,8 +49,8 @@ class Home extends Component {
         students.filter((student) => student.busId === busId * 1) || [];
     }
 
-    if(auth.roleId === 2){
-      parentStudents = students.filter(student => student.userId === auth.id);
+    if (auth.roleId === 2) {
+      parentStudents = students.filter((student) => student.userId === auth.id);
     }
 
     return (
@@ -43,12 +59,9 @@ class Home extends Component {
           <h2>
             Welcome, {auth.firstName} {auth.lastName}
           </h2>
-          <h2>
-            Role: {auth.roleId === 1 ? 'Driver' : 'Parent'}
-          </h2>
+          <h2>Role: {auth.roleId === 1 ? "Driver" : "Parent"}</h2>
         </div>
-        
-        
+
         {auth.roleId === 1 ? (
           <div id="home-driver">
             <select
@@ -76,24 +89,58 @@ class Home extends Component {
                     <th>Change Status</th>
                   </tr>
                   {studentsBus.map((student) => {
-                    const studentStatus = statuses.find(stat => stat.id === student.statusId);
-
+                    //FIND LOGIC TO GET stdStatuses by date: add a && to the end of the condition that says stStatus.date === today's date
+                    const stdStatuses =
+                      studentsStatuses.length > 0
+                        ? studentsStatuses.filter(
+                            (stStatus) => stStatus.studentId === student.id
+                          )
+                        : null;
+                    const studentCurrStatus =
+                      stdStatuses.length > 1
+                        ? stdStatuses.sort(function (x, y) {
+                            return y.time - x.time;
+                          })[
+                            stdStatuses.sort(function (x, y) {
+                              return y.time - x.time;
+                            }).length - 1
+                          ]
+                        : stdStatuses[0];
+                    const currStatus = studentCurrStatus
+                      ? statuses.find(
+                          (status) => status.id === studentCurrStatus.statusId
+                        )
+                      : {};
+                    //create api route to get students status (by id?)
+                    //create thunk and fetchstudentstatus from component did mount
+                    //filter all records de students status table that belong to the student.
+                    //if array is empty show select pointing to not picked up, otherwise
+                    //show select pointing to the default value of the last records of the statusId
                     return (
                       <tr key={student.id}>
                         <td>{student.firstName}</td>
                         <td>{student.lastName}</td>
                         <td>{student.grade}</td>
-                        <td>{studentStatus.status}</td>
                         <td>
-                          <select defaultValue={student.statusId} onChange={ev => updateStudent(student, ev.target.value)}>
-                            <option value=''>-- Select a status --</option>
-                            {
-                              statuses.map(stat => {
-                                return (
-                                  <option key={stat.id} value={stat.id}>{stat.status}</option>
-                                )
-                              })
+                          {!Object.keys(currStatus).length
+                            ? "No Status"
+                            : currStatus.status}
+                        </td>
+                        <td>
+                          <select
+                            defaultValue={currStatus.id}
+                            onChange={(ev) =>
+                              createStudentStatus(student, ev.target.value)
                             }
+                          >
+                            <option value="">-- Select a status --</option>
+                            {statuses.map((stat) => {
+                              return (
+                                <option key={stat.id} value={stat.id}>
+                                  {stat.status}
+                                </option>
+                              );
+                            })}
                           </select>
                         </td>
                       </tr>
@@ -108,44 +155,53 @@ class Home extends Component {
             <main>
               <section>
                 <h4>To School</h4>
-                {
-                  parentStudents.length > 0 ? (
-                    <div>
-                      {
-                        parentStudents.map(student => {
-                          const studentStatus = statuses.find(stat => stat.id === student.statusId) || {};
-                          const bus = buses.find(bus => bus.id === student.busId) || {};
-                          const driver = users.find(user => user.id === bus.userId) || {}
+                  <div>
+                    {parentStudents.map((student) => {
+                      //Similar to the driver, get the studentStatuses by date
+                      const studentStatus =
+                        studentsStatuses.filter(
+                          (stdStat) => stdStat.studentId === student.id
+                        ) || [];
+                      const bus =
+                        buses.find((bus) => bus.id === student.busId) || {};
+                      const driver =
+                        users.find((user) => user.id === bus.userId) || {};
 
-                          return (
-                            student.studentBusStatusId !== 1 ?
-                          (
-                            <table key={student.id}>
-                              <tbody>
-                                <tr>
-                                  <th>Date</th>
-                                  <th>Time</th>
-                                  <th>Status</th>
-                                  <th>Bus #</th>
-                                  <th>Driver</th>
-                                </tr>
-                                <tr>
-                                  <td></td>
-                                  <td></td>
-                                  <td>{studentStatus.status}</td>
-                                  <td>{bus.number}</td>
-                                  <td>{driver.firstName} {driver.lastName}</td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          ): 'No Data entered!!!'
-                            
-                          )
-                        })
-                      }
-                    </div>
-                  ) : null
-                }
+                      return (
+                        
+                          studentStatus.length > 0 ? <table key={student.id}>
+                            <tbody>
+                              <tr>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Status</th>
+                                <th>Bus #</th>
+                                <th>Driver</th>
+                              </tr>
+                              {studentStatus.map((stdStat) => {
+                                  const stdStatDate = new Date(stdStat.date);
+                                  const status = statuses.find(status => status.id === stdStat.statusId) || {};
+                                return (
+                                  <tr key={stdStat.id}>
+                                    <td>{`${stdStatDate.getMonth() + 1}/${stdStatDate.getDate()}/${stdStatDate.getFullYear()}`}</td>
+                                    <td>{stdStat.time}</td>
+                                    <td>{status.status}</td>
+                                    <td>{bus.number}</td>
+                                    <td>
+                                      {driver.firstName} {driver.lastName}
+                                    </td>
+                                  </tr>
+                                );
+                              })}
+                            </tbody>
+                          </table> : 'No Events'
+
+                        
+                        
+                      ) ;
+                    })}
+                  </div>
+                
               </section>
               <section>
                 <h4>To Home</h4>
@@ -164,7 +220,8 @@ const mapState = (state) => {
     buses: state.buses,
     students: state.students,
     statuses: state.statuses,
-    users: state.users
+    users: state.users,
+    studentsStatuses: state.studentsStatuses,
   };
 };
 
@@ -173,11 +230,22 @@ const mapDispatchToProps = (dispatch) => {
     fetchBuses: () => dispatch(fetchBuses()),
     fetchStudents: () => dispatch(fetchStudents()),
     fetchStatuses: () => dispatch(fetchStatuses()),
-    updateStudent: (student, status) => {
-      student = {...student, statusId: status * 1}
-      dispatch(updateStudent(student))
+    createStudentStatus: (student, status) => {
+      const today = new Date();
+      const time = `${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}`;
+      const date = `${
+        today.getMonth() + 1
+      }/${today.getDate()}/${today.getFullYear()}`;
+      const studentStatus = {
+        date: date,
+        time: time,
+        studentId: student.id,
+        statusId: status * 1,
+      };
+      dispatch(createStudentStatus(studentStatus));
     },
-    fetchUsers: () =>  dispatch(fetchUsers())
+    fetchUsers: () => dispatch(fetchUsers()),
+    fetchStudentsStatuses: () => dispatch(fetchStudentsStatuses()),
   };
 };
 

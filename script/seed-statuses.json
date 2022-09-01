@@ -1,19 +1,11 @@
 [
     {
         "id": 1,
-        "status": "Not picked up"
+        "status": "Departure"
     },
     {
         "id": 2,
-        "status": "On route"
-    },
-    {
-        "id": 3,
-        "status": "Dropped off at school"
-    },
-    {
-        "id": 4,
-        "status": "Dropped off at bus stop"
+        "status": "Arrival"
     }
     
 ]

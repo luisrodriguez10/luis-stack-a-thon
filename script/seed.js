@@ -1,11 +1,12 @@
 'use strict'
 
-const {db, models: {User, Role, Bus, Student, Status} } = require('../server/db')
+const {db, models: {User, Role, Bus, Student, Status, StudentStatus} } = require('../server/db')
 const seedRoles = require('./seed-roles.json');
 const seedUsers = require('./seed-users.json');
 const seedBuses = require('./seed-buses.json');
 const seedStudents = require('./seed-students.json');
 const seedStatuses = require('./seed-statuses.json')
+const seedStudentsStatuses = require('./seed-studentsStatuses.json');
 
 /**
  * seed - this function clears the database, updates tables to
@@ -20,6 +21,7 @@ async function seed() {
   await Promise.all(seedBuses.map(bus => Bus.create(bus)));
   await Promise.all(seedStatuses.map(status => Status.create(status)));
   await Promise.all(seedStudents.map(student => Student.create(student)));
+  await Promise.all(seedStudentsStatuses.map(studentStatus => StudentStatus.create(studentStatus) ));
 
 
   // Creating Users

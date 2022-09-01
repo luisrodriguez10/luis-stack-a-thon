@@ -4,7 +4,11 @@ module.exports = router;
 
 router.get('/', async(req, res, next) =>{
     try {
-        res.send(await Student.findAll());
+        res.send(await Student.findAll({
+           order: [[
+               'lastName', 'ASC'
+           ]]
+        }));
 
     } catch (ex) {
         next(ex);
