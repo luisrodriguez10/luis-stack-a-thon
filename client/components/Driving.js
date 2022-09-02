@@ -126,7 +126,7 @@ class Driving extends Component {
                           );
                         })
                       : null;
-
+                        console.log(stdStatuses)
                   const studentCurrStatus =
                     stdStatuses.length > 1
                       ? stdStatuses.sort(function (x, y) {

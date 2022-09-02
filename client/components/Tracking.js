@@ -70,9 +70,19 @@ class Tracking extends Component {
               <div>
                 {parentStudents.map((student) => {
                   //Similar to the driver, get the studentStatuses by date
+                  const today = new Date();
+                  const todaysDate = `${
+                    today.getMonth() + 1
+                  }/${today.getDate()}/${today.getFullYear()}`;
                   const studentStatus =
                     studentsStatuses.filter(
-                      (stdStat) => stdStat.studentId === student.id && stdStat.routeId === 1
+                      (stdStat) => {
+                        const stdStatDate = new Date(stdStat.date);
+                        const formatStdStatDate = `${
+                            stdStatDate.getMonth() + 1
+                        }/${stdStatDate.getDate()}/${stdStatDate.getFullYear()}`;
+                          return stdStat.studentId === student.id && stdStat.routeId === 1 && todaysDate === formatStdStatDate
+                        }
                     ) || [];
                   const bus =
                     buses.find((bus) => bus.id === student.busId) || {};
@@ -122,9 +132,19 @@ class Tracking extends Component {
                 <div>
                 {parentStudents.map((student) => {
                   //Similar to the driver, get the studentStatuses by date
+                  const today = new Date();
+                  const todaysDate = `${
+                    today.getMonth() + 1
+                  }/${today.getDate()}/${today.getFullYear()}`;
                   const studentStatus =
                     studentsStatuses.filter(
-                      (stdStat) => stdStat.studentId === student.id && stdStat.routeId === 2
+                      (stdStat) => {
+                        const stdStatDate = new Date(stdStat.date);
+                        const formatStdStatDate = `${
+                            stdStatDate.getMonth() + 1
+                        }/${stdStatDate.getDate()}/${stdStatDate.getFullYear()}`;
+                         return stdStat.studentId === student.id && stdStat.routeId === 2 && todaysDate === formatStdStatDate
+                        }
                     ) || [];
                   const bus =
                     buses.find((bus) => bus.id === student.busId) || {};
