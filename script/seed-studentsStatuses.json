@@ -11,6 +11,20 @@
         "date": "09/01/2022",
         "studentId": 1,
         "statusId": 2,
+        "routeId": 1
+    },
+    {
+        "time": "14:00:00",
+        "date": "09/01/2022",
+        "studentId": 1,
+        "statusId": 1,
+        "routeId": 2
+    },
+    {
+        "time": "15:00:00",
+        "date": "09/01/2022",
+        "studentId": 1,
+        "statusId": 2,
         "routeId": 2
     },
     {
