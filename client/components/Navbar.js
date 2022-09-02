@@ -10,6 +10,7 @@ const Navbar = ({ handleClick, isLoggedIn, auth }) => {
       {isLoggedIn && auth.roleId === 1 ? (
         <div id="nav-driver">
           <Link to="/home">Home</Link>
+          <Link to='/driving'>Driving</Link>
           <Link to="/account">Account</Link>
           <Link to="/#" onClick={handleClick}>
             Logout
@@ -18,6 +19,7 @@ const Navbar = ({ handleClick, isLoggedIn, auth }) => {
       ) : isLoggedIn && auth.roleId === 2 ? (
         <div id="nav-parent">
           <Link to="/home">Home</Link>
+          <Link to='/tracking'>Tracking</Link>
           <Link to="/account">Account</Link>
           <Link to="/pastTrips">Past Trips</Link>
           <Link to="/#" onClick={handleClick}>

@@ -7,8 +7,9 @@ import students from "./students";
 import statuses from './statuses';
 import users from './users';
 import studentsStatuses from "./studentsStatuses";
+import routes from './routes';
 
-const reducer = combineReducers({ auth, buses, students, statuses, users, studentsStatuses });
+const reducer = combineReducers({ auth, buses, students, statuses, users, studentsStatuses, routes });
 const middleware = applyMiddleware(
   thunkMiddleware,
   createLogger({ collapsed: true })
@@ -22,3 +23,4 @@ export * from './students';
 export * from './statuses';
 export * from './users';
 export * from './studentsStatuses';
+export * from './routes';

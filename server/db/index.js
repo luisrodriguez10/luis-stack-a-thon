@@ -8,6 +8,7 @@ const Bus = require('./models/Bus');
 const Student = require('./models/Student');
 const Status = require('./models/Status');
 const StudentStatus = require('./models/StudentStatus');
+const Route = require('./models/Route');
 
 //associations could go here!
 User.belongsTo(Role);
@@ -17,6 +18,7 @@ Student.belongsTo(Bus);
 // Student.belongsTo(Status);
 StudentStatus.belongsTo(Status);
 StudentStatus.belongsTo(Student);
+StudentStatus.belongsTo(Route)
 
 module.exports = {
   db,
@@ -26,6 +28,7 @@ module.exports = {
     Bus,
     Student,
     Status,
-    StudentStatus
+    StudentStatus,
+    Route
   },
 };
