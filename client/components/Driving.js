@@ -66,11 +66,12 @@ class Driving extends Component {
           <h2>Role: {auth.roleId === 1 ? "Driver" : "Parent"}</h2>
         </div>
         <div id="home-driver">
-          
           <select
             name="routeId"
             value={routeId}
-            onChange={(ev) => this.setState({ routeId: ev.target.value, busId: "" })}
+            onChange={(ev) =>
+              this.setState({ routeId: ev.target.value, busId: "" })
+            }
           >
             <option value="">Select Route</option>
             {routes.map((route) => {
@@ -107,20 +108,32 @@ class Driving extends Component {
                 </tr>
                 {studentsBus.map((student) => {
                   //FIND LOGIC TO GET stdStatuses by date: add a && to the end of the condition that says stStatus.date === today's date
+                  const today = new Date();
+                  const todaysDate = `${
+                    today.getMonth() + 1
+                  }/${today.getDate()}/${today.getFullYear()}`;
                   const stdStatuses =
                     studentsStatuses.length > 0
-                      ? studentsStatuses.filter(
-                          (stStatus) => stStatus.studentId === student.id && stStatus.routeId === routeId *1
-                        )
+                      ? studentsStatuses.filter((stStatus) => {
+                          const stdStatDate = new Date(stStatus.date);
+                          const formatStdStatDate = `${
+                            stdStatDate.getMonth() + 1
+                          }/${stdStatDate.getDate()}/${stdStatDate.getFullYear()}`;
+                          return (
+                            stStatus.studentId === student.id &&
+                            stStatus.routeId === routeId * 1 &&
+                            todaysDate === formatStdStatDate
+                          );
+                        })
                       : null;
-                      
+
                   const studentCurrStatus =
                     stdStatuses.length > 1
                       ? stdStatuses.sort(function (x, y) {
-                          return x.time.slice(0,2) - y.time.slice(0,2);
+                          return x.time.slice(0, 2) - y.time.slice(0, 2);
                         })[
                           stdStatuses.sort(function (x, y) {
-                            return x.time.slice(0,2) - y.time.slice(0,2);
+                            return x.time.slice(0, 2) - y.time.slice(0, 2);
                           }).length - 1
                         ]
                       : stdStatuses[0];
@@ -141,7 +154,6 @@ class Driving extends Component {
                       </td>
                       <td>
                         <select
-                            
                           defaultValue={currStatus.id}
                           onChange={(ev) =>
                             createStudentStatus(

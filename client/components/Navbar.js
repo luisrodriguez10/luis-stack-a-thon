@@ -6,7 +6,7 @@ import { logout } from "../store";
 const Navbar = ({ handleClick, isLoggedIn, auth }) => {
   return (
     <nav>
-      <h1>Seacoast High School</h1>
+      <h1>Parent Assurance</h1>
       {isLoggedIn && auth.roleId === 1 ? (
         <div id="nav-driver">
           <Link to="/home">Home</Link>
