@@ -36,6 +36,18 @@ class PastTrips extends Component {
       parentStudents = students.filter((student) => student.userId === auth.id);
     }
 
+    const dateChanged =
+                    date.slice(5, 7) +
+                    "/" +
+                    date.slice(8, 10) +
+                    "/" +
+                    date.slice(0, 4);
+                  const selectedDate = new Date(dateChanged);
+
+                  const selectedDateFormat = `${
+                    selectedDate.getMonth() + 1
+                  }/${selectedDate.getDate()}/${selectedDate.getFullYear()}`;
+
     return (
       <div>
         <div id="welcome-message">
@@ -57,35 +69,26 @@ class PastTrips extends Component {
                 />
               </form>
             </section>
-            <h3>School Route</h3>
-            <div>
-              {parentStudents.map((student) => {
-                const dateChanged =
-                  date.slice(5, 7) +
-                  "/" +
-                  date.slice(8, 10) +
-                  "/" +
-                  date.slice(0, 4);
-                const selectedDate = new Date(dateChanged);
-
-                const selectedDateFormat = `${
-                  selectedDate.getMonth() + 1
-                }/${selectedDate.getDate()}/${selectedDate.getFullYear()}`;
-                const studentStatus =
-                  studentsStatuses.filter((stdStat) => {
-                    const stdStatDate = new Date(stdStat.date);
-                    const formatStdStatDate = `${
-                      stdStatDate.getMonth() + 1
-                    }/${stdStatDate.getDate()}/${stdStatDate.getFullYear()}`;
-                    return (
-                      stdStat.studentId === student.id &&
-                      stdStat.routeId === 1 &&
-                      selectedDateFormat === formatStdStatDate
-                    );
-                  }) || [];
-                const bus = buses.find(bus => bus.id === student.busId) || {};
-                const driver = users.find(user => user.id === bus.id) || {};
-                return (
+            <section>
+              <h3>School Route</h3>
+              <div>
+                {parentStudents.map((student) => {
+                  const studentStatus =
+                    studentsStatuses.filter((stdStat) => {
+                      const stdStatDate = new Date(stdStat.date);
+                      const formatStdStatDate = `${
+                        stdStatDate.getMonth() + 1
+                      }/${stdStatDate.getDate()}/${stdStatDate.getFullYear()}`;
+                      return (
+                        stdStat.studentId === student.id &&
+                        stdStat.routeId === 1 &&
+                        selectedDateFormat === formatStdStatDate
+                      );
+                    }) || [];
+                  const bus =
+                    buses.find((bus) => bus.id === student.busId) || {};
+                  const driver = users.find((user) => user.id === bus.id) || {};
+                  return (
                     <table key={student.id}>
                       <tbody>
                         <tr>
@@ -117,12 +120,65 @@ class PastTrips extends Component {
                         })}
                       </tbody>
                     </table>
-                )
-              })}
-            </div>
-            <section></section>
+                  );
+                })}
+              </div>
+            </section>
+
             <section>
               <h3>Home Route</h3>
+              <div>
+                {parentStudents.map((student) => {
+                  const studentStatus =
+                    studentsStatuses.filter((stdStat) => {
+                      const stdStatDate = new Date(stdStat.date);
+                      const formatStdStatDate = `${
+                        stdStatDate.getMonth() + 1
+                      }/${stdStatDate.getDate()}/${stdStatDate.getFullYear()}`;
+                      return (
+                        stdStat.studentId === student.id &&
+                        stdStat.routeId === 2 &&
+                        selectedDateFormat === formatStdStatDate
+                      );
+                    }) || [];
+                  const bus =
+                    buses.find((bus) => bus.id === student.busId) || {};
+                  const driver = users.find((user) => user.id === bus.id) || {};
+                  return (
+                    <table key={student.id}>
+                      <tbody>
+                        <tr>
+                          <th>Date</th>
+                          <th>Time</th>
+                          <th>Status</th>
+                          <th>Bus #</th>
+                          <th>Driver</th>
+                        </tr>
+                        {studentStatus.map((stdStat) => {
+                          const stdStatDate = new Date(stdStat.date);
+                          const status =
+                            statuses.find(
+                              (status) => status.id === stdStat.statusId
+                            ) || {};
+                          return (
+                            <tr key={stdStat.id}>
+                              <td>{`${
+                                stdStatDate.getMonth() + 1
+                              }/${stdStatDate.getDate()}/${stdStatDate.getFullYear()}`}</td>
+                              <td>{stdStat.time}</td>
+                              <td>{status.status}</td>
+                              <td>{bus.number}</td>
+                              <td>
+                                {driver.firstName} {driver.lastName}
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  );
+                })}
+              </div>
             </section>
           </main>
         </div>
