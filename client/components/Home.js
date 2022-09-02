@@ -152,60 +152,62 @@ class Home extends Component {
           </div>
         ) : (
           <div id="home-parent">
-            <main>
-              <section>
-                <h4>To School</h4>
-                  <div>
-                    {parentStudents.map((student) => {
-                      //Similar to the driver, get the studentStatuses by date
-                      const studentStatus =
-                        studentsStatuses.filter(
-                          (stdStat) => stdStat.studentId === student.id
-                        ) || [];
-                      const bus =
-                        buses.find((bus) => bus.id === student.busId) || {};
-                      const driver =
-                        users.find((user) => user.id === bus.userId) || {};
+            <main id="home-parent-main">
+              <section className="route-school">
+                <h3>Route To School</h3>
+                <div>
+                  {parentStudents.map((student) => {
+                    //Similar to the driver, get the studentStatuses by date
+                    const studentStatus =
+                      studentsStatuses.filter(
+                        (stdStat) => stdStat.studentId === student.id
+                      ) || [];
+                    const bus =
+                      buses.find((bus) => bus.id === student.busId) || {};
+                    const driver =
+                      users.find((user) => user.id === bus.userId) || {};
 
-                      return (
-                        
-                          studentStatus.length > 0 ? <table key={student.id}>
-                            <tbody>
-                              <tr>
-                                <th>Date</th>
-                                <th>Time</th>
-                                <th>Status</th>
-                                <th>Bus #</th>
-                                <th>Driver</th>
+                    return studentStatus.length > 0 ? (
+                      <table key={student.id}>
+                        <tbody>
+                          <tr>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Status</th>
+                            <th>Bus #</th>
+                            <th>Driver</th>
+                          </tr>
+                          {studentStatus.map((stdStat) => {
+                            const stdStatDate = new Date(stdStat.date);
+                            const status =
+                              statuses.find(
+                                (status) => status.id === stdStat.statusId
+                              ) || {};
+                            return (
+                              <tr key={stdStat.id}>
+                                <td>{`${
+                                  stdStatDate.getMonth() + 1
+                                }/${stdStatDate.getDate()}/${stdStatDate.getFullYear()}`}</td>
+                                <td>{stdStat.time}</td>
+                                <td>{status.status}</td>
+                                <td>{bus.number}</td>
+                                <td>
+                                  {driver.firstName} {driver.lastName}
+                                </td>
                               </tr>
-                              {studentStatus.map((stdStat) => {
-                                  const stdStatDate = new Date(stdStat.date);
-                                  const status = statuses.find(status => status.id === stdStat.statusId) || {};
-                                return (
-                                  <tr key={stdStat.id}>
-                                    <td>{`${stdStatDate.getMonth() + 1}/${stdStatDate.getDate()}/${stdStatDate.getFullYear()}`}</td>
-                                    <td>{stdStat.time}</td>
-                                    <td>{status.status}</td>
-                                    <td>{bus.number}</td>
-                                    <td>
-                                      {driver.firstName} {driver.lastName}
-                                    </td>
-                                  </tr>
-                                );
-                              })}
-                            </tbody>
-                          </table> : 'No Events'
-
-                        
-                        
-                      ) ;
-                    })}
-                  </div>
-                
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    ) : (
+                      "No Events"
+                    );
+                  })}
+                </div>
               </section>
-              <section>
-                <h4>To Home</h4>
-              </section>
+              {/* <section>
+                <h3>Route To Bus Stop</h3>
+              </section> */}
             </main>
           </div>
         )}

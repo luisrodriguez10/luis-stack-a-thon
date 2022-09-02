@@ -88,3 +88,50 @@ td{
   font-weight: bolder;
   color: black;
 }
+
+main#home-parent-main{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+section.route-school{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+main#home-parent-main > *{
+  margin: 1.5rem;
+}
+
+form#login-form{
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  align-items: center;
+}
+
+form#login-form > *{
+  padding: 0.5rem;
+}
+
+div.username-block{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+div.username-block > * {
+  padding: 0.2rem;
+}
+
+div.password-block{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+div.password-block > * {
+  padding: 0.2rem;
+}
