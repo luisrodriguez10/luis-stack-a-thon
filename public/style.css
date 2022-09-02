@@ -176,3 +176,17 @@ div.password-block{
 div.password-block > * {
   padding: 0.2rem;
 }
+
+div#driving-entire-page > * {
+  padding: 0.5rem;
+}
+
+div#map{
+  height: 50vh;
+  /* display: flex;
+  align-items: center; */
+}
+
+div#bus-route h3{
+  text-align: center;
+}

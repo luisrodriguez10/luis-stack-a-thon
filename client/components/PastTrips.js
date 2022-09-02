@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { TbFilesOff } from 'react-icons/Tb';
 import {
   fetchBuses,
   fetchStatuses,
@@ -60,7 +61,7 @@ class PastTrips extends Component {
           <main id="past-trips-parent-main">
             <section className="date-section">
               <form className="date-selected">
-                <label htmlFor="date">Choose a Date</label>
+                <label htmlFor="date" style={{fontWeight: 'bold', fontSize: '17px'}}>Choose a Date</label>
                 <input
                   type="date"
                   value={date}
@@ -70,9 +71,9 @@ class PastTrips extends Component {
               </form>
             </section>
             <section className="past-trips-school">
-              <h3>School Route</h3>
+              <h3 style={{fontSize: '25px'}}>School Route</h3>
               <div>
-                {parentStudents.map((student) => {
+                { parentStudents.map((student) => {
                   const studentStatus =
                     studentsStatuses.filter((stdStat) => {
                       const stdStatDate = new Date(stdStat.date);
@@ -89,14 +90,15 @@ class PastTrips extends Component {
                     buses.find((bus) => bus.id === student.busId) || {};
                   const driver = users.find((user) => user.id === bus.id) || {};
                   return (
+                    studentStatus.length > 0 ?
                     <table key={student.id}>
                       <tbody>
                         <tr>
-                          <th>Date</th>
-                          <th>Time</th>
-                          <th>Status</th>
-                          <th>Bus #</th>
-                          <th>Driver</th>
+                          <th style={{padding: '1rem'}}>Date</th>
+                          <th style={{padding: '1rem'}}>Time</th>
+                          <th style={{padding: '1rem'}}>Status</th>
+                          <th style={{padding: '1rem'}}>Bus #</th>
+                          <th style={{padding: '1rem'}}>Driver</th>
                         </tr>
                         {studentStatus.map((stdStat) => {
                           const stdStatDate = new Date(stdStat.date);
@@ -106,27 +108,32 @@ class PastTrips extends Component {
                             ) || {};
                           return (
                             <tr key={stdStat.id}>
-                              <td>{`${
+                              <td style={{padding: '1rem'}}>{`${
                                 stdStatDate.getMonth() + 1
                               }/${stdStatDate.getDate()}/${stdStatDate.getFullYear()}`}</td>
-                              <td>{stdStat.time}</td>
-                              <td>{status.status}</td>
-                              <td>{bus.number}</td>
-                              <td>
+                              <td style={{padding: '1rem'}}>{stdStat.time}</td>
+                              <td style={{padding: '1rem'}}>{status.status}</td>
+                              <td style={{padding: '1rem'}}>{bus.number}</td>
+                              <td style={{padding: '1rem'}}>
                                 {driver.firstName} {driver.lastName}
                               </td>
                             </tr>
                           );
                         })}
                       </tbody>
-                    </table>
+                    </table> : <div className="d-flex flex-column justify-content-center align-items-center">
+                          <TbFilesOff size={90} />
+                          <h3 >
+                            No Status
+                          </h3>
+                        </div>
                   );
                 })}
               </div>
             </section>
 
             <section className="past-trips-home">
-              <h3>Home Route</h3>
+              <h3 style={{fontSize: '25px'}}>Home Route</h3>
               <div>
                 {parentStudents.map((student) => {
                   const studentStatus =
@@ -145,14 +152,15 @@ class PastTrips extends Component {
                     buses.find((bus) => bus.id === student.busId) || {};
                   const driver = users.find((user) => user.id === bus.id) || {};
                   return (
+                    studentStatus.length > 0 ?
                     <table key={student.id}>
                       <tbody>
                         <tr>
-                          <th>Date</th>
-                          <th>Time</th>
-                          <th>Status</th>
-                          <th>Bus #</th>
-                          <th>Driver</th>
+                          <th style={{padding: '1rem'}}>Date</th>
+                          <th style={{padding: '1rem'}}>Time</th>
+                          <th style={{padding: '1rem'}}>Status</th>
+                          <th style={{padding: '1rem'}}>Bus #</th>
+                          <th style={{padding: '1rem'}}>Driver</th>
                         </tr>
                         {studentStatus.map((stdStat) => {
                           const stdStatDate = new Date(stdStat.date);
@@ -162,20 +170,25 @@ class PastTrips extends Component {
                             ) || {};
                           return (
                             <tr key={stdStat.id}>
-                              <td>{`${
+                              <td style={{padding: '1rem'}}>{`${
                                 stdStatDate.getMonth() + 1
                               }/${stdStatDate.getDate()}/${stdStatDate.getFullYear()}`}</td>
-                              <td>{stdStat.time}</td>
-                              <td>{status.status}</td>
-                              <td>{bus.number}</td>
-                              <td>
+                              <td style={{padding: '1rem'}}>{stdStat.time}</td>
+                              <td style={{padding: '1rem'}}>{status.status}</td>
+                              <td style={{padding: '1rem'}}>{bus.number}</td>
+                              <td style={{padding: '1rem'}}>
                                 {driver.firstName} {driver.lastName}
                               </td>
                             </tr>
                           );
                         })}
                       </tbody>
-                    </table>
+                    </table> : <div className="d-flex flex-column justify-content-center align-items-center">
+                          <TbFilesOff size={90} />
+                          <h3 >
+                            No Status
+                          </h3>
+                        </div>
                   );
                 })}
               </div>
