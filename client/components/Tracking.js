@@ -29,13 +29,11 @@ class Tracking extends Component {
 
   render() {
     const { busId, routeId } = this.state;
-    console.log(routeId);
     const {
       auth,
       buses,
       students,
       statuses,
-      createStudentStatus,
       users,
       studentsStatuses,
       routes,
@@ -68,13 +66,13 @@ class Tracking extends Component {
         <div id="home-parent">
           <main id="home-parent-main">
             <section className="route-school">
-              <h3>Route To School</h3>
+              <h3>School Route</h3>
               <div>
                 {parentStudents.map((student) => {
                   //Similar to the driver, get the studentStatuses by date
                   const studentStatus =
                     studentsStatuses.filter(
-                      (stdStat) => stdStat.studentId === student.id
+                      (stdStat) => stdStat.studentId === student.id && stdStat.routeId === 1
                     ) || [];
                   const bus =
                     buses.find((bus) => bus.id === student.busId) || {};
@@ -119,9 +117,58 @@ class Tracking extends Component {
                 })}
               </div>
             </section>
-            {/* <section>
-                <h3>Route To Bus Stop</h3>
-              </section> */}
+            <section className="route-home">
+                <h3>Home Route</h3>
+                <div>
+                {parentStudents.map((student) => {
+                  //Similar to the driver, get the studentStatuses by date
+                  const studentStatus =
+                    studentsStatuses.filter(
+                      (stdStat) => stdStat.studentId === student.id && stdStat.routeId === 2
+                    ) || [];
+                  const bus =
+                    buses.find((bus) => bus.id === student.busId) || {};
+                  const driver =
+                    users.find((user) => user.id === bus.userId) || {};
+
+                  return studentStatus.length > 0 ? (
+                    <table key={student.id}>
+                      <tbody>
+                        <tr>
+                          <th>Date</th>
+                          <th>Time</th>
+                          <th>Status</th>
+                          <th>Bus #</th>
+                          <th>Driver</th>
+                        </tr>
+                        {studentStatus.map((stdStat) => {
+                          const stdStatDate = new Date(stdStat.date);
+                          const status =
+                            statuses.find(
+                              (status) => status.id === stdStat.statusId
+                            ) || {};
+                          return (
+                            <tr key={stdStat.id}>
+                              <td>{`${
+                                stdStatDate.getMonth() + 1
+                              }/${stdStatDate.getDate()}/${stdStatDate.getFullYear()}`}</td>
+                              <td>{stdStat.time}</td>
+                              <td>{status.status}</td>
+                              <td>{bus.number}</td>
+                              <td>
+                                {driver.firstName} {driver.lastName}
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  ) : (
+                    "No Events"
+                  );
+                })}
+              </div>
+              </section>
           </main>
         </div>
       </div>

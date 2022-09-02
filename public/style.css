@@ -101,6 +101,12 @@ section.route-school{
   align-items: center;
 }
 
+section.route-home{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 main#home-parent-main > *{
   margin: 1.5rem;
 }

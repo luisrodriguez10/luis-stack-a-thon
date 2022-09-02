@@ -30,7 +30,6 @@ class Driving extends Component {
 
   render() {
     const { busId, routeId } = this.state;
-    console.log(routeId);
     const {
       auth,
       buses,
@@ -67,6 +66,21 @@ class Driving extends Component {
           <h2>Role: {auth.roleId === 1 ? "Driver" : "Parent"}</h2>
         </div>
         <div id="home-driver">
+          
+          <select
+            name="routeId"
+            value={routeId}
+            onChange={(ev) => this.setState({ routeId: ev.target.value, busId: "" })}
+          >
+            <option value="">Select Route</option>
+            {routes.map((route) => {
+              return (
+                <option key={route.id} value={route.id}>
+                  {route.name}
+                </option>
+              );
+            })}
+          </select>
           <select
             name="busId"
             value={busId}
@@ -77,20 +91,6 @@ class Driving extends Component {
               return (
                 <option key={bus.id} value={bus.id}>
                   {bus.number}
-                </option>
-              );
-            })}
-          </select>
-          <select
-            name="routeId"
-            value={routeId}
-            onChange={(ev) => this.setState({ routeId: ev.target.value })}
-          >
-            <option value="">Select Route</option>
-            {routes.map((route) => {
-              return (
-                <option key={route.id} value={route.id}>
-                  {route.name}
                 </option>
               );
             })}
@@ -110,16 +110,17 @@ class Driving extends Component {
                   const stdStatuses =
                     studentsStatuses.length > 0
                       ? studentsStatuses.filter(
-                          (stStatus) => stStatus.studentId === student.id
+                          (stStatus) => stStatus.studentId === student.id && stStatus.routeId === routeId *1
                         )
                       : null;
+                      
                   const studentCurrStatus =
                     stdStatuses.length > 1
                       ? stdStatuses.sort(function (x, y) {
-                          return y.time - x.time;
+                          return x.time.slice(0,2) - y.time.slice(0,2);
                         })[
                           stdStatuses.sort(function (x, y) {
-                            return y.time - x.time;
+                            return x.time.slice(0,2) - y.time.slice(0,2);
                           }).length - 1
                         ]
                       : stdStatuses[0];
@@ -128,11 +129,6 @@ class Driving extends Component {
                         (status) => status.id === studentCurrStatus.statusId
                       )
                     : {};
-                  //create api route to get students status (by id?)
-                  //create thunk and fetchstudentstatus from component did mount
-                  //filter all records de students status table that belong to the student.
-                  //if array is empty show select pointing to not picked up, otherwise
-                  //show select pointing to the default value of the last records of the statusId
                   return (
                     <tr key={student.id}>
                       <td>{student.firstName}</td>
@@ -145,6 +141,7 @@ class Driving extends Component {
                       </td>
                       <td>
                         <select
+                            
                           defaultValue={currStatus.id}
                           onChange={(ev) =>
                             createStudentStatus(
