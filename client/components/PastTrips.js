@@ -49,18 +49,18 @@ class PastTrips extends Component {
                   }/${selectedDate.getDate()}/${selectedDate.getFullYear()}`;
 
     return (
-      <div>
+      <div id="past-trips-page">
         <div id="welcome-message">
           <h2>
             Welcome, {auth.firstName} {auth.lastName}
           </h2>
           <h2>Role: {auth.roleId === 1 ? "Driver" : "Parent"}</h2>
         </div>
-        <div>
-          <main>
-            <section>
-              <form>
-                <label htmlFor="date">Select a Date</label>
+        <div id="past-trips-parent">
+          <main id="past-trips-parent-main">
+            <section className="date-section">
+              <form className="date-selected">
+                <label htmlFor="date">Choose a Date</label>
                 <input
                   type="date"
                   value={date}
@@ -69,7 +69,7 @@ class PastTrips extends Component {
                 />
               </form>
             </section>
-            <section>
+            <section className="past-trips-school">
               <h3>School Route</h3>
               <div>
                 {parentStudents.map((student) => {
@@ -125,7 +125,7 @@ class PastTrips extends Component {
               </div>
             </section>
 
-            <section>
+            <section className="past-trips-home">
               <h3>Home Route</h3>
               <div>
                 {parentStudents.map((student) => {
