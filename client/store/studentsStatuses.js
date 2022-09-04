@@ -22,7 +22,9 @@ export const fetchStudentsStatuses = () =>{
 export const createStudentStatus = (studentStatus) =>{
     return async(dispatch) =>{
         const response = await axios.post('/api/studentsStatuses', studentStatus);
-        dispatch({type: 'CREATE_STUDENT_STATUS', studentStatus: response.data});
+        const action = {type: 'CREATE_STUDENT_STATUS', studentStatus: response.data};
+        window.socket.send(JSON.stringify(action));
+        dispatch(action);
     }
 }
 

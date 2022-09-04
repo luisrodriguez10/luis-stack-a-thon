@@ -6,10 +6,9 @@ import { logout } from "../store";
 const Navbar = ({ handleClick, isLoggedIn, auth }) => {
   return (
     <nav>
-      <h1>Parent Assurance</h1>
+      <h1><Link to='/'>Parent Assurance</Link></h1>
       {isLoggedIn && auth.roleId === 1 ? (
         <div id="nav-driver">
-          <Link to="/home">Home</Link>
           <Link to='/driving'>Driving</Link>
           <Link to="/account">Account</Link>
           <Link to="/#" onClick={handleClick}>
@@ -18,7 +17,6 @@ const Navbar = ({ handleClick, isLoggedIn, auth }) => {
         </div>
       ) : isLoggedIn && auth.roleId === 2 ? (
         <div id="nav-parent">
-          <Link to="/home">Home</Link>
           <Link to='/tracking'>Tracking</Link>
           <Link to="/account">Account</Link>
           <Link to="/pastTrips">Past Trips</Link>

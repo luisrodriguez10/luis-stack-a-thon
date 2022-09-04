@@ -99,14 +99,15 @@ class Driving extends Component {
               })}
             </select>
             {studentsBus ? (
+              <div>
               <table>
                 <tbody>
                   <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Grade</th>
-                    <th>Status</th>
-                    <th>Change Status</th>
+                    <th style={{padding: '1rem'}}>First Name</th>
+                    <th style={{padding: '1rem'}}>Last Name</th>
+                    <th style={{padding: '1rem'}}>Grade</th>
+                    <th style={{padding: '1rem'}}>Status</th>
+                    <th style={{padding: '1rem'}}>Change Status</th>
                   </tr>
                   {studentsBus.map((student) => {
                     //FIND LOGIC TO GET stdStatuses by date: add a && to the end of the condition that says stStatus.date === today's date
@@ -145,16 +146,17 @@ class Driving extends Component {
                       : {};
                     return (
                       <tr key={student.id}>
-                        <td>{student.firstName}</td>
-                        <td>{student.lastName}</td>
-                        <td>{student.grade}</td>
-                        <td>
+                        <td style={{padding: '1rem'}}>{student.firstName}</td>
+                        <td style={{padding: '1rem'}}>{student.lastName}</td>
+                        <td style={{padding: '1rem'}}>{student.grade}</td>
+                        <td style={{padding: '1rem'}}>
                           {!Object.keys(currStatus).length
                             ? "No Status"
                             : currStatus.status}
                         </td>
-                        <td>
+                        <td style={{padding: '1rem'}}>
                           <select
+                          disabled={currStatus.status === 'Arrival'}
                             defaultValue={currStatus.id}
                             onChange={(ev) =>
                               createStudentStatus(
@@ -179,10 +181,12 @@ class Driving extends Component {
                   })}
                 </tbody>
               </table>
+              <button>Arrival</button>
+              </div>
             ) : null}
           </div>
         </div>
-        {routeId && busId ? <div id="bus-route"><h3>Bus Route</h3><Map /></div> : null} 
+        {routeId && busId ? <div id="bus-route"><h3 style={{fontSize: '25px'}}>Bus Route</h3><Map coordinates={coordinates}/></div> : null} 
       </div>
     );
   }
@@ -197,6 +201,7 @@ const mapState = (state) => {
     users: state.users,
     studentsStatuses: state.studentsStatuses,
     routes: state.routes,
+    coordinates: state.coordinates
   };
 };
 

@@ -6,7 +6,7 @@ import Driving from './components/Driving';
 import Home from './components/Home';
 import PastTrips from './components/PastTrips';
 import Tracking from './components/Tracking';
-import {fetchBuses, me} from './store'
+import { me } from './store'
 
 /**
  * COMPONENT
@@ -14,6 +14,12 @@ import {fetchBuses, me} from './store'
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData()
+    const url = window.location.origin.replace('http', 'ws');
+    window.socket = new WebSocket(url);
+    window.socket.addEventListener('message', (ev) =>{
+      const action = JSON.parse(ev.data);
+      this.props.dispatchAction(action);
+    })
   }
 
   render() {
@@ -23,7 +29,7 @@ class Routes extends Component {
       <div>
         {isLoggedIn ? (
           <Switch>
-            <Route path="/home" component={Home} />
+            <Route exact path="/" component={Home} />
             {/* <Redirect to="/home" /> */}
             <Route path='/driving' component={Driving} />
             <Route path='/tracking' component={Tracking} />
@@ -65,7 +71,8 @@ const mapDispatch = dispatch => {
   return {
     loadInitialData() {
       dispatch(me())
-    }
+    },
+    dispatchAction: (action) => dispatch(action),
   }
 }
 
