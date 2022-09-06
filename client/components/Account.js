@@ -56,7 +56,7 @@ class Account extends Component {
             {auth.address} {auth.city} {auth.state} {auth.zipCode}
           </p>
           <br />
-        </div><button className="btn btn-secondary"><Link to='/editUser'>EDIT INFORMATION</Link></button>
+        </div><button className="btn btn-dark mb-4"><Link to='/editUser'>EDIT INFORMATION</Link></button>
         
       </main>
     );

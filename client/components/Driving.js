@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Map from "./Map";
 import {
   fetchBuses,
   fetchStatuses,
@@ -10,6 +9,7 @@ import {
   fetchStudentsStatuses,
   fetchRoutes,
 } from "../store";
+import MapDriver from "./MapDriver";
 
 class Driving extends Component {
   constructor() {
@@ -244,7 +244,7 @@ class Driving extends Component {
         {routeId && busId ? (
           <div id="bus-route">
             <h3 style={{ fontSize: "25px" }}>Bus Route</h3>
-            <Map />
+            <MapDriver />
           </div>
         ) : null}
       </div>

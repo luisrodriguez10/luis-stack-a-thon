@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { TbFilesOff } from 'react-icons/Tb';
 import Table from 'react-bootstrap/Table';
-import Map from "./Map";
+import MapParent from "./MapParent";
 import {
   fetchBuses,
   fetchStatuses,
@@ -125,9 +125,9 @@ class Tracking extends Component {
                       >
                         <div className="d-flex flex-column justify-content-center align-items-center">
                           <TbFilesOff size={90} />
-                          <h3 >
+                          <h4 >
                             No Status
-                          </h3>
+                          </h4>
                         </div>
                       </div>
                     );
@@ -197,9 +197,9 @@ class Tracking extends Component {
                       >
                         <div className="d-flex flex-column justify-content-center align-items-center">
                           <TbFilesOff size={90} />
-                          <h3 >
+                          <h4 >
                             No Status
-                          </h3>
+                          </h4>
                         </div>
                       </div>
                     );
@@ -209,7 +209,10 @@ class Tracking extends Component {
             </main>
           </div>
         </div>
-        <Map />
+        <div id="bus-route">
+          <h3 style={{ fontSize: "25px" }}>Bus Route</h3>
+          <MapParent />
+        </div>
       </div>
     );
   }

@@ -5,7 +5,7 @@ import "leaflet-routing-machine";
 import { createCoordinates, fetchCoordinates } from '../store';
 
 
-class Map extends Component {
+class MapDriver extends Component {
   constructor(){
     super();
   }
@@ -45,6 +45,9 @@ class Map extends Component {
         .on("routesfound", (ev) => {
           marker.once("click",  () => {
             ev.routes[0].coordinates.forEach(async (coord, index)  => {
+              console.log(typeof coord['lat'])
+              //save all coordinates in DB, lat, lng
+              //from tracking call map
               await this.props.createCoordinates(coord);
               await this.props.fetchCoordinates();
               
@@ -91,4 +94,4 @@ const mapDispatchToProps = (dispatch) =>{
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Map);
+export default connect(mapStateToProps, mapDispatchToProps)(MapDriver);
