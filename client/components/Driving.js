@@ -50,8 +50,6 @@ class Driving extends Component {
     }, 0);
   }
 
-  
-
   setArrivalForStudents(studentStatuses, students) {
     const today = new Date();
     const todaysDate = `${
@@ -65,10 +63,9 @@ class Driving extends Component {
           stdStatDate.getMonth() + 1
         }/${stdStatDate.getDate()}/${stdStatDate.getFullYear()}`;
 
-        
-
         return stStatus.studentId === student.id &&
-          todaysDate === formatStdStatDate && this.getStatusesByStudentCurrDate(studentStatuses, student.id) === 1
+          todaysDate === formatStdStatDate &&
+          this.getStatusesByStudentCurrDate(studentStatuses, student.id) === 1
           ? this.props.createStudentStatus(student, 2, 1)
           : null;
       });

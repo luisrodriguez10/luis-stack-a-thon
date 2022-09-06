@@ -9,6 +9,7 @@ const Student = require('./models/Student');
 const Status = require('./models/Status');
 const StudentStatus = require('./models/StudentStatus');
 const Route = require('./models/Route');
+const State = require('./models/State');
 
 //associations could go here!
 User.belongsTo(Role);
@@ -29,6 +30,7 @@ module.exports = {
     Student,
     Status,
     StudentStatus,
-    Route
+    Route,
+    State
   },
 };

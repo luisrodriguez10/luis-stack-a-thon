@@ -16,8 +16,18 @@ nav{
   align-items: center;
   justify-content: space-evenly;
   margin: 1em;
-  background-color: beige;
+  background-color: rgb(238, 238, 35);
   border-radius: 20px;
+}
+
+nav h1 a{
+  text-decoration: none;
+  color: black;
+}
+
+nav div a{
+  text-decoration: none;
+  color: black;
 }
 
 div#nav-driver{
@@ -36,6 +46,23 @@ div#nav-driver{
 div#nav-parent{
   display: flex;
   justify-content: space-evenly;
+}
+
+div#nav-driver a{
+  text-decoration: none;
+  color: black;
+}
+
+div#nav-parent a{
+  text-decoration: none;
+  color: black;
+}
+
+nav a.selected{
+  color: black;
+  font-weight: bold;
+  font-size: 20px;
+  text-decoration: none;
 }
 
 div#welcome-message{
@@ -183,10 +210,22 @@ div#driving-entire-page > * {
 
 div#map{
   height: 50vh;
-  /* display: flex;
-  align-items: center; */
+  width: 70vw;
+  margin-left: 16%
 }
 
 div#bus-route h3{
   text-align: center;
+}
+
+button a{
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+}
+
+img#logo{
+  width: 8rem;
+  height: 8rem;
+  border: 1000px;
 }

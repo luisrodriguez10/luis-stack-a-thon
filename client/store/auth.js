@@ -28,6 +28,18 @@ export const me = () => async dispatch => {
   }
 }
 
+export const editUser = (user, history) => {
+  return async (dispatch) => {
+    const response = await axios.put(`/api/users/${user.id}`, user, {
+      headers: {
+        authorization: window.localStorage.getItem("token"),
+      },
+    });
+    dispatch({ type: "SET_AUTH", auth: response.data });
+    history.push("/account");
+  };
+};
+
 export const authenticate = (username, password, method) => async dispatch => {
   try {
     const res = await axios.post(`/auth/${method}`, {username, password})

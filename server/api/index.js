@@ -7,6 +7,7 @@ router.use('/students', require('./students'));
 router.use('/statuses', require('./statuses'));
 router.use('/studentsStatuses', require('./studentsStatuses'));
 router.use('/routes', require('./routes'));
+router.use('/states', require('./states'));
 
 router.use((req, res, next) => {
   const error = new Error('Not Found')

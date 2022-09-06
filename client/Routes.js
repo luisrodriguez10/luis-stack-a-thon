@@ -7,6 +7,9 @@ import Home from './components/Home';
 import PastTrips from './components/PastTrips';
 import Tracking from './components/Tracking';
 import { me } from './store'
+import Navbar from './components/Navbar';
+import Account from './components/Account';
+import EditUser from './components/EditUser';
 
 /**
  * COMPONENT
@@ -27,14 +30,16 @@ class Routes extends Component {
 
     return (
       <div>
+        <Route component={Navbar}/>
         {isLoggedIn ? (
           <Switch>
             <Route exact path="/" component={Home} />
             {/* <Redirect to="/home" /> */}
+            <Route path='/account' component={Account} />
             <Route path='/driving' component={Driving} />
             <Route path='/tracking' component={Tracking} />
             <Route path='/pastTrips' component={PastTrips} />
-
+            <Route path='/editUser' component={EditUser} />
           </Switch>
         ) 
         // : isLoggedIn && auth.id === 2  (

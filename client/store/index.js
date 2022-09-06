@@ -9,8 +9,9 @@ import users from './users';
 import studentsStatuses from "./studentsStatuses";
 import routes from './routes';
 import coordinates from "./coordinates";
+import states from "./states";
 
-const reducer = combineReducers({ auth, buses, students, statuses, users, studentsStatuses, routes, coordinates });
+const reducer = combineReducers({ auth, buses, students, statuses, users, studentsStatuses, routes, coordinates, states });
 const middleware = applyMiddleware(
   thunkMiddleware,
   createLogger({ collapsed: true })
@@ -26,3 +27,4 @@ export * from './users';
 export * from './studentsStatuses';
 export * from './routes';
 export * from './coordinates';
+export * from './states';

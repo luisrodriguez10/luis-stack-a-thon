@@ -6,6 +6,9 @@ const users = (state = [], action) =>{
     if(action.type === 'SET_USERS'){
         state = action.users
     }
+    if(action.type === 'UPDATE_USER'){
+        state = [...state, action.user]
+    }
     return state;
 }
 
