@@ -49,17 +49,17 @@ class Map extends Component {
               await this.props.fetchCoordinates();
               
               setTimeout(() => {
-                if(this.props.coordinates.length > 0){
-                  marker.on('click', () => {
-                    this.props.coordinates.map(crd => {
-                      marker.setLatLng([crd.lat, crd.lng])
-                    })
-                  })
-                }else{
+                // if(this.props.coordinates.length > 0){
+                //   marker.on('click', () => {
+                //     this.props.coordinates.map(crd => {
+                //       marker.setLatLng([crd.lat, crd.lng])
+                //     })
+                //   })
+                // }else{
                   marker.on("click", function () {
                     marker.setLatLng([coord.lat, coord.lng]);
                   });
-                }
+                // }
                 
               }, 100 * index);
             });
