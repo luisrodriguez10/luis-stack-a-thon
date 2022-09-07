@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { TbFilesOff } from "react-icons/Tb";
+import { TbFilesOff } from "react-icons/tb";
 import {
   fetchBuses,
   fetchStatuses,
