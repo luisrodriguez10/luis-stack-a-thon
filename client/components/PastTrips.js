@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { TbFilesOff } from 'react-icons/Tb';
+import { TbFilesOff } from "react-icons/Tb";
 import {
   fetchBuses,
   fetchStatuses,
@@ -32,22 +32,27 @@ class PastTrips extends Component {
       this.props;
     const { date } = this.state;
     let parentStudents;
+    let selectedDateFormat;
 
     if (auth.roleId === 2) {
       parentStudents = students.filter((student) => student.userId === auth.id);
     }
 
-    const dateChanged =
-                    date.slice(5, 7) +
-                    "/" +
-                    date.slice(8, 10) +
-                    "/" +
-                    date.slice(0, 4);
-                  const selectedDate = new Date(dateChanged);
+    if (date) {
+      const dateChanged =
+        date.slice(5, 7) + "/" + date.slice(8, 10) + "/" + date.slice(0, 4);
+      const selectedDate = new Date(dateChanged);
 
-                  const selectedDateFormat = `${
-                    selectedDate.getMonth() + 1
-                  }/${selectedDate.getDate()}/${selectedDate.getFullYear()}`;
+      selectedDateFormat = `${
+        selectedDate.getMonth() + 1
+      }/${selectedDate.getDate()}/${selectedDate.getFullYear()}`;
+    } else {
+      const today = new Date();
+      const todaysDate = `${
+        today.getMonth() + 1
+      }/${today.getDate()}/${today.getFullYear()}`;
+      selectedDateFormat = todaysDate;
+    }
 
     return (
       <div id="past-trips-page">
@@ -61,7 +66,12 @@ class PastTrips extends Component {
           <main id="past-trips-parent-main">
             <section className="date-section">
               <form className="date-selected">
-                <label htmlFor="date" style={{fontWeight: 'bold', fontSize: '17px'}}>Choose a Date</label>
+                <label
+                  htmlFor="date"
+                  style={{ fontWeight: "bold", fontSize: "17px" }}
+                >
+                  Choose a Date
+                </label>
                 <input
                   type="date"
                   value={date}
@@ -71,9 +81,9 @@ class PastTrips extends Component {
               </form>
             </section>
             <section className="past-trips-school">
-              <h3 style={{fontSize: '25px'}}>School Route</h3>
+              <h3 style={{ fontSize: "25px" }}>School Route</h3>
               <div>
-                { parentStudents.map((student) => {
+                {parentStudents.map((student) => {
                   const studentStatus =
                     studentsStatuses.filter((stdStat) => {
                       const stdStatDate = new Date(stdStat.date);
@@ -89,16 +99,15 @@ class PastTrips extends Component {
                   const bus =
                     buses.find((bus) => bus.id === student.busId) || {};
                   const driver = users.find((user) => user.id === bus.id) || {};
-                  return (
-                    studentStatus.length > 0 ?
+                  return studentStatus.length > 0 ? (
                     <table key={student.id}>
                       <tbody>
                         <tr>
-                          <th style={{padding: '1rem'}}>Date</th>
-                          <th style={{padding: '1rem'}}>Time</th>
-                          <th style={{padding: '1rem'}}>Status</th>
-                          <th style={{padding: '1rem'}}>Bus #</th>
-                          <th style={{padding: '1rem'}}>Driver</th>
+                          <th style={{ padding: "1rem" }}>Date</th>
+                          <th style={{ padding: "1rem" }}>Time</th>
+                          <th style={{ padding: "1rem" }}>Status</th>
+                          <th style={{ padding: "1rem" }}>Bus #</th>
+                          <th style={{ padding: "1rem" }}>Driver</th>
                         </tr>
                         {studentStatus.map((stdStat) => {
                           const stdStatDate = new Date(stdStat.date);
@@ -108,32 +117,36 @@ class PastTrips extends Component {
                             ) || {};
                           return (
                             <tr key={stdStat.id}>
-                              <td style={{padding: '1rem'}}>{`${
+                              <td style={{ padding: "1rem" }}>{`${
                                 stdStatDate.getMonth() + 1
                               }/${stdStatDate.getDate()}/${stdStatDate.getFullYear()}`}</td>
-                              <td style={{padding: '1rem'}}>{stdStat.time}</td>
-                              <td style={{padding: '1rem'}}>{status.status}</td>
-                              <td style={{padding: '1rem'}}>{bus.number}</td>
-                              <td style={{padding: '1rem'}}>
+                              <td style={{ padding: "1rem" }}>
+                                {stdStat.time}
+                              </td>
+                              <td style={{ padding: "1rem" }}>
+                                {status.status}
+                              </td>
+                              <td style={{ padding: "1rem" }}>{bus.number}</td>
+                              <td style={{ padding: "1rem" }}>
                                 {driver.firstName} {driver.lastName}
                               </td>
                             </tr>
                           );
                         })}
                       </tbody>
-                    </table> : <div className="d-flex flex-column justify-content-center align-items-center">
-                          <TbFilesOff size={90} />
-                          <h3 >
-                            No Status
-                          </h3>
-                        </div>
+                    </table>
+                  ) : (
+                    <div className="d-flex flex-column justify-content-center align-items-center">
+                      <TbFilesOff size={90} />
+                      <h3>No Status</h3>
+                    </div>
                   );
                 })}
               </div>
             </section>
 
             <section className="past-trips-home">
-              <h3 style={{fontSize: '25px'}}>Home Route</h3>
+              <h3 style={{ fontSize: "25px" }}>Home Route</h3>
               <div>
                 {parentStudents.map((student) => {
                   const studentStatus =
@@ -151,16 +164,15 @@ class PastTrips extends Component {
                   const bus =
                     buses.find((bus) => bus.id === student.busId) || {};
                   const driver = users.find((user) => user.id === bus.id) || {};
-                  return (
-                    studentStatus.length > 0 ?
+                  return studentStatus.length > 0 ? (
                     <table key={student.id}>
                       <tbody>
                         <tr>
-                          <th style={{padding: '1rem'}}>Date</th>
-                          <th style={{padding: '1rem'}}>Time</th>
-                          <th style={{padding: '1rem'}}>Status</th>
-                          <th style={{padding: '1rem'}}>Bus #</th>
-                          <th style={{padding: '1rem'}}>Driver</th>
+                          <th style={{ padding: "1rem" }}>Date</th>
+                          <th style={{ padding: "1rem" }}>Time</th>
+                          <th style={{ padding: "1rem" }}>Status</th>
+                          <th style={{ padding: "1rem" }}>Bus #</th>
+                          <th style={{ padding: "1rem" }}>Driver</th>
                         </tr>
                         {studentStatus.map((stdStat) => {
                           const stdStatDate = new Date(stdStat.date);
@@ -170,25 +182,29 @@ class PastTrips extends Component {
                             ) || {};
                           return (
                             <tr key={stdStat.id}>
-                              <td style={{padding: '1rem'}}>{`${
+                              <td style={{ padding: "1rem" }}>{`${
                                 stdStatDate.getMonth() + 1
                               }/${stdStatDate.getDate()}/${stdStatDate.getFullYear()}`}</td>
-                              <td style={{padding: '1rem'}}>{stdStat.time}</td>
-                              <td style={{padding: '1rem'}}>{status.status}</td>
-                              <td style={{padding: '1rem'}}>{bus.number}</td>
-                              <td style={{padding: '1rem'}}>
+                              <td style={{ padding: "1rem" }}>
+                                {stdStat.time}
+                              </td>
+                              <td style={{ padding: "1rem" }}>
+                                {status.status}
+                              </td>
+                              <td style={{ padding: "1rem" }}>{bus.number}</td>
+                              <td style={{ padding: "1rem" }}>
                                 {driver.firstName} {driver.lastName}
                               </td>
                             </tr>
                           );
                         })}
                       </tbody>
-                    </table> : <div className="d-flex flex-column justify-content-center align-items-center">
-                          <TbFilesOff size={90} />
-                          <h3 >
-                            No Status
-                          </h3>
-                        </div>
+                    </table>
+                  ) : (
+                    <div className="d-flex flex-column justify-content-center align-items-center">
+                      <TbFilesOff size={90} />
+                      <h3>No Status</h3>
+                    </div>
                   );
                 })}
               </div>

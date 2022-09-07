@@ -143,7 +143,7 @@ class Driving extends Component {
               })}
             </select>
             {studentsBus ? (
-              <div>
+              <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                 <table>
                   <tbody>
                     <tr>
@@ -230,6 +230,7 @@ class Driving extends Component {
                 </table>
                 {routeId * 1 === 1 ? (
                   <button
+                    className="btn btn-dark mb-4"
                     onClick={() =>
                       setArrivalForStudents(studentsStatuses, studentsBus)
                     }
