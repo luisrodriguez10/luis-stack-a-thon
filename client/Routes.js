@@ -34,7 +34,6 @@ class Routes extends Component {
         {isLoggedIn ? (
           <Switch>
             <Route exact path="/" component={Home} />
-            {/* <Redirect to="/home" /> */}
             <Route path='/account' component={Account} />
             <Route path='/driving' component={Driving} />
             <Route path='/tracking' component={Tracking} />
@@ -42,18 +41,10 @@ class Routes extends Component {
             <Route path='/editUser' component={EditUser} />
           </Switch>
         ) 
-        // : isLoggedIn && auth.id === 2  (
-        //   <Switch>
-        //     <Route path="/home" component={Home} />
-        //     <Redirect to="/home" />
-        //     <Route path='/pastTrips' component={PastTrips} />
-        //   </Switch>
-        // ) 
         : (
           <Switch>
-            <Route path='/' exact component={ Login } />
+            <Route path='/' exact component={ Home } />
             <Route path="/login" component={Login} />
-            {/* <Route path="/signup" component={Signup} /> */}
           </Switch>
         )}
       </div>

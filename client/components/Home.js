@@ -60,12 +60,11 @@ class Home extends Component {
             <h1 style={{ fontFamily: "system-ui" }}>PARENT ASSURANCE</h1>
             <img id="home-logo" src="../public/home-logo.png"></img>
           </div>
-          <div id="parent-message">
-            <p style={{ fontSize: "25px", fontFamily: "system-ui" }}>
+          <div id="parent-message" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+            <p style={{ fontSize: "25px", fontFamily: "system-ui", textAlign: 'center' }}>
               Parent Assurance is an application developed to allow parents to
               monitor and track their child since the moment they get on the
-              buss until they arrive at school and their way back to the bus
-              stop.
+              buss until they arrive at school and the same on their way back home.
               <br />
               <br />
               The parent will be able to:
@@ -75,7 +74,7 @@ class Home extends Component {
                 Know the time their child get on or off the bus, what bus and
                 the bus driver.
               </li>
-              <li>Track the bus while is on route.</li>
+              <li>Track the bus while it is on route.</li>
             </ul>
           </div>
         </div>

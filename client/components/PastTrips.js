@@ -99,7 +99,10 @@ class PastTrips extends Component {
                   const bus =
                     buses.find((bus) => bus.id === student.busId) || {};
                   const driver = users.find((user) => user.id === bus.id) || {};
-                  return studentStatus.length > 0 ? (
+                  const studentStatusSortedSchoolRoute = studentStatus.sort(function(x,y) {
+                    return x.time.slice(0,2) - y.time.slice(0,2)
+                  })
+                  return studentStatusSortedSchoolRoute.length > 0 ? (
                     <table key={student.id}>
                       <tbody>
                         <tr>
@@ -109,7 +112,7 @@ class PastTrips extends Component {
                           <th style={{ padding: "1rem" }}>Bus #</th>
                           <th style={{ padding: "1rem" }}>Driver</th>
                         </tr>
-                        {studentStatus.map((stdStat) => {
+                        {studentStatusSortedSchoolRoute.map((stdStat) => {
                           const stdStatDate = new Date(stdStat.date);
                           const status =
                             statuses.find(
@@ -164,7 +167,10 @@ class PastTrips extends Component {
                   const bus =
                     buses.find((bus) => bus.id === student.busId) || {};
                   const driver = users.find((user) => user.id === bus.id) || {};
-                  return studentStatus.length > 0 ? (
+                  const studentStatusSortedSchoolRoute = studentStatus.sort(function(x,y) {
+                    return x.time.slice(0,2) - y.time.slice(0,2)
+                  })
+                  return studentStatusSortedSchoolRoute.length > 0 ? (
                     <table key={student.id}>
                       <tbody>
                         <tr>
@@ -174,7 +180,7 @@ class PastTrips extends Component {
                           <th style={{ padding: "1rem" }}>Bus #</th>
                           <th style={{ padding: "1rem" }}>Driver</th>
                         </tr>
-                        {studentStatus.map((stdStat) => {
+                        {studentStatusSortedSchoolRoute.map((stdStat) => {
                           const stdStatDate = new Date(stdStat.date);
                           const status =
                             statuses.find(
