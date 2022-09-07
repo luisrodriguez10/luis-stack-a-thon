@@ -285,7 +285,7 @@ const mapDispatchToProps = (dispatch) => {
         today.getMonth() + 1
       }/${today.getDate()}/${today.getFullYear()}`;
       const studentStatus = {
-        date: date,
+        date: `${date} 00:00:00.000 -0500`,
         time: time,
         studentId: student.id,
         statusId: status * 1,
