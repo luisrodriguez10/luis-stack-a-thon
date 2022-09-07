@@ -2,96 +2,78 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import L from "leaflet";
 import "leaflet-routing-machine";
-import { createCoordinates, fetchCoordinates } from '../store';
-
+import { createCoordinates, fetchCoordinates } from "../store";
 
 class MapParent extends Component {
-  constructor(){
-    super();
-  }
-  componentDidMount() {
-    
-    this.props.fetchCoordinates();
-    var map = L.map("map").setView([29.690630, -95.559930], 15);
-    
-    L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
-      attribution: "OSM",
-    }).addTo(map);
+  async componentDidUpdate(prevProps) {
+    if (prevProps.coordinates.length !== this.props.coordinates.length) {
+      var container = L.DomUtil.get("map");
 
-    var busIcon = L.icon({
-      iconUrl: "../public/bus.png",
-      iconSize: [60, 60],
-    });
-    var schoolIcon = L.icon({
-      iconUrl: "../public/school.png",
-      iconSize: [40, 40],
-    });
-
-    // MARKER
-    var marker = L.marker([29.690630, -95.559930], { icon: busIcon }).addTo(
-      map
-    );
-    // map click event
-    map.on("click",  (e) => {
-      L.marker([e.latlng.lat, e.latlng.lng], {
-        icon: schoolIcon,
+      if (container != null) {
+        container._leaflet_id = null;
+      }
+      var map = L.map("map").setView([29.69063, -95.55993], 15);
+      L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
+        attribution: "OSM",
       }).addTo(map);
+
+      var busIcon = L.icon({
+        iconUrl: "../public/bus.png",
+        iconSize: [60, 60],
+      });
+      var schoolIcon = L.icon({
+        iconUrl: "../public/school.png",
+        iconSize: [40, 40],
+      });
+
+      var marker = L.marker([29.69063, -95.55993], { icon: busIcon }).addTo(
+        map
+      );
+
+      L.marker(
+        [this.props.coordinates[0].lat * 1, this.props.coordinates[0].lng * 1],
+        {
+          icon: schoolIcon,
+        }
+      ).addTo(map);
+
       L.Routing.control({
         waypoints: [
-          L.latLng(29.690630, -95.559930),
-          L.latLng(e.latlng.lat, e.latlng.lng),
+          L.latLng(29.69063, -95.55993),
+          L.latLng(
+            this.props.coordinates[this.props.coordinates.length - 1].lat * 1,
+            this.props.coordinates[this.props.coordinates.length - 1].lng * 1
+          ),
         ],
-      })
-        .on("routesfound", (ev) => {
-          marker.once("click",  () => {
-            ev.routes[0].coordinates.forEach(async (coord, index)  => {
-              console.log(typeof coord['lat'])
-              //save all coordinates in DB, lat, lng
-              //from tracking call map
-              await this.props.createCoordinates(coord);
-              await this.props.fetchCoordinates();
-              
-              setTimeout(() => {
-                // if(this.props.coordinates.length > 0){
-                //   marker.on('click', () => {
-                //     this.props.coordinates.map(crd => {
-                //       marker.setLatLng([crd.lat, crd.lng])
-                //     })
-                //   })
-                // }else{
-                  marker.on("click", function () {
-                    marker.setLatLng([coord.lat, coord.lng]);
-                  });
-                // }
-                
-              }, 100 * index);
-            });
-          });
-        })
-        .addTo(map);
-    });
+      }).addTo(map);
+
+      if (this.props.coordinates.length > 1) {
+        marker.setLatLng([
+          this.props.coordinates[this.props.coordinates.length - 1].lat * 1,
+          this.props.coordinates[this.props.coordinates.length - 1].lng * 1,
+        ]);
+      }
+    }
   }
 
   render() {
-    
-    return (
-      <div id="map"></div>
-    );
+    return <div id="map"></div>;
   }
 }
 
-const mapStateToProps = (state) =>{
+const mapStateToProps = (state) => {
   return {
     auth: state.auth,
-    coordinates: state.coordinates
-  }
-}
+    coordinates: state.coordinates,
+  };
+};
 
-const mapDispatchToProps = (dispatch) =>{
+const mapDispatchToProps = (dispatch) => {
   return {
-    createCoordinates: (coordinates) => dispatch(createCoordinates(coordinates)),
-    fetchCoordinates: () => dispatch(fetchCoordinates())
-  }
-}
+    createCoordinates: (coordinates) =>
+      dispatch(createCoordinates(coordinates)),
+    fetchCoordinates: () => dispatch(fetchCoordinates()),
+  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(MapParent);

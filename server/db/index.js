@@ -10,6 +10,7 @@ const Status = require('./models/Status');
 const StudentStatus = require('./models/StudentStatus');
 const Route = require('./models/Route');
 const State = require('./models/State');
+const Coordinate = require('./models/Coordinate');
 
 //associations could go here!
 User.belongsTo(Role);
@@ -31,6 +32,7 @@ module.exports = {
     Status,
     StudentStatus,
     Route,
-    State
+    State,
+    Coordinate
   },
 };

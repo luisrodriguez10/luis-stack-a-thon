@@ -23,7 +23,8 @@ export const fetchCoordinates = () =>{
 export const createCoordinates = (coordinates) =>{
     const coordinate = {lat: coordinates.lat, lng: coordinates.lng}
     return async(dispatch) =>{
-        const action = {type: 'CREATE_COORDINATE', coordinate: coordinate};
+        const response = await axios.post('/api/coordinates', coordinate);
+        const action = {type: 'CREATE_COORDINATE', coordinate: response.data};
         window.socket.send(JSON.stringify(action));
         dispatch(action);
         

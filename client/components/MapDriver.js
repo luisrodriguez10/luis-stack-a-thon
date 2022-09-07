@@ -2,18 +2,20 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import L from "leaflet";
 import "leaflet-routing-machine";
-import { createCoordinates, fetchCoordinates } from '../store';
-
+import { createCoordinates, fetchCoordinates } from "../store";
 
 class MapDriver extends Component {
-  constructor(){
-    super();
-  }
   componentDidMount() {
-    
-    this.props.fetchCoordinates();
-    var map = L.map("map").setView([29.690630, -95.559930], 15);
-    
+    function containsCoord(arr, val) {
+      return arr.some((element) => {
+        if (element.lat === val) {
+          return true;
+        }
+        return false;
+      });
+    }
+    var map = L.map("map").setView([29.69063, -95.55993], 15);
+
     L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
       attribution: "OSM",
     }).addTo(map);
@@ -27,45 +29,55 @@ class MapDriver extends Component {
       iconSize: [40, 40],
     });
 
-    // MARKER
-    var marker = L.marker([29.690630, -95.559930], { icon: busIcon }).addTo(
-      map
-    );
-    // map click event
-    map.on("click",  (e) => {
+    var marker = L.marker([29.69063, -95.55993], { icon: busIcon }).addTo(map);
+
+    map.on("click", (e) => {
       L.marker([e.latlng.lat, e.latlng.lng], {
         icon: schoolIcon,
       }).addTo(map);
       L.Routing.control({
         waypoints: [
-          L.latLng(29.690630, -95.559930),
+          L.latLng(29.69063, -95.55993),
           L.latLng(e.latlng.lat, e.latlng.lng),
         ],
       })
-        .on("routesfound", (ev) => {
-          marker.once("click",  () => {
-            ev.routes[0].coordinates.forEach(async (coord, index)  => {
-              console.log(typeof coord['lat'])
-              //save all coordinates in DB, lat, lng
-              //from tracking call map
-              await this.props.createCoordinates(coord);
+        .on("routesfound", async (ev) => {
+          await this.props.createCoordinates(
+            ev.routes[0].coordinates[ev.routes[0].coordinates.length - 1]
+          );
+          await this.props.fetchCoordinates();
+          let stopsCoords = [];
+          let stopOne = ev.routes[0].coordinates[15];
+          let stopTwo = ev.routes[0].coordinates[35];
+          let stopThree = ev.routes[0].coordinates[55];
+          marker.on("click", async () => {
+            if (!containsCoord(stopsCoords, stopOne.lat)) {
+              marker.setLatLng([stopOne.lat, stopOne.lng]);
+              stopsCoords.push(stopOne);
+              await this.props.createCoordinates(stopOne);
               await this.props.fetchCoordinates();
-              
-              setTimeout(() => {
-                // if(this.props.coordinates.length > 0){
-                //   marker.on('click', () => {
-                //     this.props.coordinates.map(crd => {
-                //       marker.setLatLng([crd.lat, crd.lng])
-                //     })
-                //   })
-                // }else{
-                  marker.on("click", function () {
-                    marker.setLatLng([coord.lat, coord.lng]);
-                  });
-                // }
-                
-              }, 100 * index);
-            });
+            } else if (!containsCoord(stopsCoords, stopTwo.lat)) {
+              marker.setLatLng([stopTwo.lat, stopTwo.lng]);
+              stopsCoords.push(stopTwo);
+              await this.props.createCoordinates(stopTwo);
+              await this.props.fetchCoordinates();
+            } else if (!containsCoord(stopsCoords, stopThree.lat)) {
+              marker.setLatLng([stopThree.lat, stopThree.lng]);
+              stopsCoords.push(stopThree);
+              await this.props.createCoordinates(stopThree);
+              await this.props.fetchCoordinates();
+            } else {
+              marker.setLatLng([
+                ev.routes[0].coordinates[ev.routes[0].coordinates.length - 1]
+                  .lat,
+                ev.routes[0].coordinates[ev.routes[0].coordinates.length - 1]
+                  .lng,
+              ]);
+              await this.props.createCoordinates(
+                ev.routes[0].coordinates[ev.routes[0].coordinates.length - 1]
+              );
+              await this.props.fetchCoordinates();
+            }
           });
         })
         .addTo(map);
@@ -73,25 +85,24 @@ class MapDriver extends Component {
   }
 
   render() {
-    
-    return (
-      <div id="map"></div>
-    );
+    return <div id="map"></div>;
   }
 }
 
-const mapStateToProps = (state) =>{
+const mapStateToProps = (state) => {
   return {
     auth: state.auth,
-    coordinates: state.coordinates
-  }
-}
+    coordinates: state.coordinates,
+  };
+};
 
-const mapDispatchToProps = (dispatch) =>{
+const mapDispatchToProps = (dispatch) => {
   return {
-    createCoordinates: (coordinates) => dispatch(createCoordinates(coordinates)),
-    fetchCoordinates: () => dispatch(fetchCoordinates())
-  }
-}
+    createCoordinates: (coordinates) => {
+      dispatch(createCoordinates(coordinates));
+    },
+    fetchCoordinates: () => dispatch(fetchCoordinates()),
+  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(MapDriver);
