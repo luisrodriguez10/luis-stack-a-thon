@@ -104,7 +104,7 @@ class Driving extends Component {
 
     return (
       <div id="driving-entire-page">
-        <div id="home-page">
+        <div>
           <div id="welcome-message">
             <h2>
               Welcome, {auth.firstName} {auth.lastName}
@@ -143,7 +143,13 @@ class Driving extends Component {
               })}
             </select>
             {studentsBus ? (
-              <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
                 <table>
                   <tbody>
                     <tr>

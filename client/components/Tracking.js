@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { TbFilesOff } from 'react-icons/Tb';
-import Table from 'react-bootstrap/Table';
+import { TbFilesOff } from "react-icons/Tb";
+import Table from "react-bootstrap/Table";
 import MapParent from "./MapParent";
 import {
   fetchBuses,
@@ -53,161 +53,161 @@ class Tracking extends Component {
 
     return (
       <div id="map-whole-page">
-        <div id="home-page">
-          <div id="welcome-message">
-            <h2>
-              Welcome, {auth.firstName} {auth.lastName}
-            </h2>
-            <h2>Role: {auth.roleId === 1 ? "Driver" : "Parent"}</h2>
-          </div>
-          <div id="home-parent">
-            <main id="home-parent-main">
-              <section className="route-school">
-                <h3 style={{fontSize: '25px'}}>School Route</h3>
-                <div>
-                  {parentStudents.map((student) => {
-                    //Similar to the driver, get the studentStatuses by date
-                    const today = new Date();
-                    const todaysDate = `${
-                      today.getMonth() + 1
-                    }/${today.getDate()}/${today.getFullYear()}`;
-                    const studentStatus =
-                      studentsStatuses.filter((stdStat) => {
-                        const stdStatDate = new Date(stdStat.date);
-                        const formatStdStatDate = `${
-                          stdStatDate.getMonth() + 1
-                        }/${stdStatDate.getDate()}/${stdStatDate.getFullYear()}`;
-                        return (
-                          stdStat.studentId === student.id &&
-                          stdStat.routeId === 1 &&
-                          todaysDate === formatStdStatDate
-                        );
-                      }) || [];
-                    const bus =
-                      buses.find((bus) => bus.id === student.busId) || {};
-                    const driver =
-                      users.find((user) => user.id === bus.userId) || {};
+        <div id="welcome-message">
+          <h2>
+            Welcome, {auth.firstName} {auth.lastName}
+          </h2>
+          <h2>Role: {auth.roleId === 1 ? "Driver" : "Parent"}</h2>
+        </div>
+        <div id="home-parent">
+          <main id="home-parent-main">
+            <section className="route-school">
+              <h3 style={{ fontSize: "25px" }}>School Route</h3>
+              <div>
+                {parentStudents.map((student) => {
+                  //Similar to the driver, get the studentStatuses by date
+                  const today = new Date();
+                  const todaysDate = `${
+                    today.getMonth() + 1
+                  }/${today.getDate()}/${today.getFullYear()}`;
+                  const studentStatus =
+                    studentsStatuses.filter((stdStat) => {
+                      const stdStatDate = new Date(stdStat.date);
+                      const formatStdStatDate = `${
+                        stdStatDate.getMonth() + 1
+                      }/${stdStatDate.getDate()}/${stdStatDate.getFullYear()}`;
+                      return (
+                        stdStat.studentId === student.id &&
+                        stdStat.routeId === 1 &&
+                        todaysDate === formatStdStatDate
+                      );
+                    }) || [];
+                  const bus =
+                    buses.find((bus) => bus.id === student.busId) || {};
+                  const driver =
+                    users.find((user) => user.id === bus.userId) || {};
 
-                    return studentStatus.length > 0 ? (
-                      <table key={student.id}>
-                        <tbody>
-                          <tr >
-                            <th style={{padding: '1rem'}}>Date</th>
-                            <th style={{padding: '1rem'}}>Time</th>
-                            <th style={{padding: '1rem'}}>Status</th>
-                            <th style={{padding: '1rem'}}>Bus #</th>
-                            <th style={{padding: '1rem'}}>Driver</th>
-                          </tr>
-                          {studentStatus.map((stdStat) => {
-                            const stdStatDate = new Date(stdStat.date);
-                            const status =
-                              statuses.find(
-                                (status) => status.id === stdStat.statusId
-                              ) || {};
-                            return (
-                              <tr key={stdStat.id}>
-                                <td style={{padding: '1rem'}}>{`${
-                                  stdStatDate.getMonth() + 1
-                                }/${stdStatDate.getDate()}/${stdStatDate.getFullYear()}`}</td>
-                                <td style={{padding: '1rem'}}>{stdStat.time}</td>
-                                <td style={{padding: '1rem'}}>{status.status}</td>
-                                <td style={{padding: '1rem'}}>{bus.number}</td>
-                                <td style={{padding: '1rem'}}>
-                                  {driver.firstName} {driver.lastName}
-                                </td>
-                              </tr>
-                            );
-                          })}
-                        </tbody>
-                      </table>
-                    ) : (
-                      <div
-                      >
-                        <div className="d-flex flex-column justify-content-center align-items-center">
-                          <TbFilesOff size={90} />
-                          <h4 >
-                            No Status
-                          </h4>
-                        </div>
+                  return studentStatus.length > 0 ? (
+                    <table key={student.id}>
+                      <tbody>
+                        <tr>
+                          <th style={{ padding: "1rem" }}>Date</th>
+                          <th style={{ padding: "1rem" }}>Time</th>
+                          <th style={{ padding: "1rem" }}>Status</th>
+                          <th style={{ padding: "1rem" }}>Bus #</th>
+                          <th style={{ padding: "1rem" }}>Driver</th>
+                        </tr>
+                        {studentStatus.map((stdStat) => {
+                          const stdStatDate = new Date(stdStat.date);
+                          const status =
+                            statuses.find(
+                              (status) => status.id === stdStat.statusId
+                            ) || {};
+                          return (
+                            <tr key={stdStat.id}>
+                              <td style={{ padding: "1rem" }}>{`${
+                                stdStatDate.getMonth() + 1
+                              }/${stdStatDate.getDate()}/${stdStatDate.getFullYear()}`}</td>
+                              <td style={{ padding: "1rem" }}>
+                                {stdStat.time}
+                              </td>
+                              <td style={{ padding: "1rem" }}>
+                                {status.status}
+                              </td>
+                              <td style={{ padding: "1rem" }}>{bus.number}</td>
+                              <td style={{ padding: "1rem" }}>
+                                {driver.firstName} {driver.lastName}
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  ) : (
+                    <div>
+                      <div className="d-flex flex-column justify-content-center align-items-center">
+                        <TbFilesOff size={90} />
+                        <h4>No Status</h4>
                       </div>
-                    );
-                  })}
-                </div>
-              </section>
-              <section className="route-home">
-                <h3 style={{fontSize: '25px'}}>Home Route</h3>
-                <div>
-                  {parentStudents.map((student) => {
-                    //Similar to the driver, get the studentStatuses by date
-                    const today = new Date();
-                    const todaysDate = `${
-                      today.getMonth() + 1
-                    }/${today.getDate()}/${today.getFullYear()}`;
-                    const studentStatus =
-                      studentsStatuses.filter((stdStat) => {
-                        const stdStatDate = new Date(stdStat.date);
-                        const formatStdStatDate = `${
-                          stdStatDate.getMonth() + 1
-                        }/${stdStatDate.getDate()}/${stdStatDate.getFullYear()}`;
-                        return (
-                          stdStat.studentId === student.id &&
-                          stdStat.routeId === 2 &&
-                          todaysDate === formatStdStatDate
-                        );
-                      }) || [];
-                    const bus =
-                      buses.find((bus) => bus.id === student.busId) || {};
-                    const driver =
-                      users.find((user) => user.id === bus.userId) || {};
+                    </div>
+                  );
+                })}
+              </div>
+            </section>
+            <section className="route-home">
+              <h3 style={{ fontSize: "25px" }}>Home Route</h3>
+              <div>
+                {parentStudents.map((student) => {
+                  //Similar to the driver, get the studentStatuses by date
+                  const today = new Date();
+                  const todaysDate = `${
+                    today.getMonth() + 1
+                  }/${today.getDate()}/${today.getFullYear()}`;
+                  const studentStatus =
+                    studentsStatuses.filter((stdStat) => {
+                      const stdStatDate = new Date(stdStat.date);
+                      const formatStdStatDate = `${
+                        stdStatDate.getMonth() + 1
+                      }/${stdStatDate.getDate()}/${stdStatDate.getFullYear()}`;
+                      return (
+                        stdStat.studentId === student.id &&
+                        stdStat.routeId === 2 &&
+                        todaysDate === formatStdStatDate
+                      );
+                    }) || [];
+                  const bus =
+                    buses.find((bus) => bus.id === student.busId) || {};
+                  const driver =
+                    users.find((user) => user.id === bus.userId) || {};
 
-                    return studentStatus.length > 0 ? (
-                      <table key={student.id}>
-                        <tbody>
-                          <tr>
-                            <th style={{padding: '1rem'}}>Date</th>
-                            <th style={{padding: '1rem'}}>Time</th>
-                            <th style={{padding: '1rem'}}>Status</th>
-                            <th style={{padding: '1rem'}}>Bus #</th>
-                            <th style={{padding: '1rem'}}>Driver</th>
-                          </tr>
-                          {studentStatus.map((stdStat) => {
-                            const stdStatDate = new Date(stdStat.date);
-                            const status =
-                              statuses.find(
-                                (status) => status.id === stdStat.statusId
-                              ) || {};
-                            return (
-                              <tr key={stdStat.id}>
-                                <td style={{padding: '1rem'}}>{`${
-                                  stdStatDate.getMonth() + 1
-                                }/${stdStatDate.getDate()}/${stdStatDate.getFullYear()}`}</td>
-                                <td style={{padding: '1rem'}}>{stdStat.time}</td>
-                                <td style={{padding: '1rem'}}>{status.status}</td>
-                                <td style={{padding: '1rem'}}>{bus.number}</td>
-                                <td style={{padding: '1rem'}}>
-                                  {driver.firstName} {driver.lastName}
-                                </td>
-                              </tr>
-                            );
-                          })}
-                        </tbody>
-                      </table>
-                    ) : (
-                      <div
-                      >
-                        <div className="d-flex flex-column justify-content-center align-items-center">
-                          <TbFilesOff size={90} />
-                          <h4 >
-                            No Status
-                          </h4>
-                        </div>
+                  return studentStatus.length > 0 ? (
+                    <table key={student.id}>
+                      <tbody>
+                        <tr>
+                          <th style={{ padding: "1rem" }}>Date</th>
+                          <th style={{ padding: "1rem" }}>Time</th>
+                          <th style={{ padding: "1rem" }}>Status</th>
+                          <th style={{ padding: "1rem" }}>Bus #</th>
+                          <th style={{ padding: "1rem" }}>Driver</th>
+                        </tr>
+                        {studentStatus.map((stdStat) => {
+                          const stdStatDate = new Date(stdStat.date);
+                          const status =
+                            statuses.find(
+                              (status) => status.id === stdStat.statusId
+                            ) || {};
+                          return (
+                            <tr key={stdStat.id}>
+                              <td style={{ padding: "1rem" }}>{`${
+                                stdStatDate.getMonth() + 1
+                              }/${stdStatDate.getDate()}/${stdStatDate.getFullYear()}`}</td>
+                              <td style={{ padding: "1rem" }}>
+                                {stdStat.time}
+                              </td>
+                              <td style={{ padding: "1rem" }}>
+                                {status.status}
+                              </td>
+                              <td style={{ padding: "1rem" }}>{bus.number}</td>
+                              <td style={{ padding: "1rem" }}>
+                                {driver.firstName} {driver.lastName}
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  ) : (
+                    <div>
+                      <div className="d-flex flex-column justify-content-center align-items-center">
+                        <TbFilesOff size={90} />
+                        <h4>No Status</h4>
                       </div>
-                    );
-                  })}
-                </div>
-              </section>
-            </main>
-          </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </section>
+          </main>
         </div>
         <div id="bus-route">
           <h3 style={{ fontSize: "25px" }}>Bus Route</h3>
