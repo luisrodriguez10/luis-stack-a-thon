@@ -245,9 +245,13 @@ div#home-message{
 }
 
 img#home-logo{
-  width: 50rem;
-  height: 50rem;
-  border: 1000px;
+  width: 35rem;
+  height: 35rem;
+}
+
+div#parent-message p{
+  font-size: 25px;
+  font-family: 'system-ui';
 }
 
 div#parent-message  p > *{

@@ -251,7 +251,7 @@ class Driving extends Component {
         {routeId && busId ? (
           <div id="bus-route">
             <h3 style={{ fontSize: "25px" }}>Bus Route</h3>
-            <MapDriver />
+            <MapDriver routeId={routeId}/>
           </div>
         ) : null}
       </div>

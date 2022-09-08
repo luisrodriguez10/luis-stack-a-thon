@@ -14,30 +14,59 @@ class MapDriver extends Component {
         return false;
       });
     }
-    var map = L.map("map").setView([29.69063, -95.55993], 15);
+    var map =
+      this.props.routeId * 1 === 1
+        ? L.map("map").setView([29.690821, -95.546921], 15)
+        : L.map("map").setView([29.697121, -95.567328], 15);
+    var startIcon;
+    var endIcon;
+    var marker;
 
     L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
       attribution: "OSM",
     }).addTo(map);
 
-    var busIcon = L.icon({
-      iconUrl: "../public/bus.png",
-      iconSize: [60, 60],
-    });
-    var schoolIcon = L.icon({
-      iconUrl: "../public/school.png",
-      iconSize: [40, 40],
-    });
+    if (this.props.routeId * 1 === 1) {
+      startIcon = L.icon({
+        iconUrl: "../public/bus.png",
+        iconSize: [60, 60],
+      });
 
-    var marker = L.marker([29.69063, -95.55993], { icon: busIcon }).addTo(map);
+      endIcon = L.icon({
+        iconUrl: "../public/school.png",
+        iconSize: [40, 40],
+      });
+    } else {
+      startIcon = L.icon({
+        iconUrl: "../public/bus.png",
+        iconSize: [60, 60],
+      });
+
+      endIcon = L.icon({
+        iconUrl: "../public/bus-stop.png",
+        iconSize: [80, 80],
+      });
+    }
+
+    if (this.props.routeId * 1 === 1) {
+      marker = L.marker([29.690821, -95.546921], { icon: startIcon }).addTo(
+        map
+      );
+    } else {
+      marker = L.marker([29.697121, -95.567328], { icon: startIcon }).addTo(
+        map
+      );
+    }
 
     map.on("click", (e) => {
       L.marker([e.latlng.lat, e.latlng.lng], {
-        icon: schoolIcon,
+        icon: endIcon,
       }).addTo(map);
       L.Routing.control({
         waypoints: [
-          L.latLng(29.69063, -95.55993),
+          this.props.routeId * 1 === 1
+            ? L.latLng(29.690821, -95.546921)
+            : L.latLng(29.697121, -95.567328),
           L.latLng(e.latlng.lat, e.latlng.lng),
         ],
       })
@@ -47,9 +76,9 @@ class MapDriver extends Component {
           );
           await this.props.fetchCoordinates();
           let stopsCoords = [];
-          let stopOne = ev.routes[0].coordinates[15];
-          let stopTwo = ev.routes[0].coordinates[35];
-          let stopThree = ev.routes[0].coordinates[55];
+          let stopOne = ev.routes[0].coordinates[35];
+          let stopTwo = ev.routes[0].coordinates[55];
+          let stopThree = ev.routes[0].coordinates[85];
           marker.on("click", async () => {
             if (!containsCoord(stopsCoords, stopOne.lat)) {
               marker.setLatLng([stopOne.lat, stopOne.lng]);
