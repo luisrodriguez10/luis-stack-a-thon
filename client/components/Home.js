@@ -83,7 +83,7 @@ class Home extends Component {
             >
               Parent Assurance is an application developed to allow parents to
               monitor and track their child since the moment they get on the
-              buss until they arrive at school and the same on their way back
+              bus until they arrive at school and the same on their way back
               home.
               <br />
               <br />
