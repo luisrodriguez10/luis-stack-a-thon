@@ -60,32 +60,46 @@ class Home extends Component {
             <h1 style={{ fontFamily: "system-ui" }}>PARENT ASSURANCE</h1>
             <img id="home-logo" src="../public/home-logo.png"></img>
           </div>
-          <div id="parent-message" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-            <p style={{
-              listStyle: 'none',
-              outline: 'none',
-              textAlign: 'center',
-              display: 'flex',
-              justifyContent: 'center',
-              fontSize: '25px',
-              fontFamily: 'system-ui'
-            }}>
+          <div
+            id="parent-message"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              // width: "900px",
+              // marginLeft: "940px",
+            }}
+          >
+            <p
+              style={{
+                listStyle: "none",
+                outline: "none",
+                textAlign: "center",
+                // display: "flex",
+                // justifyContent: "center",
+                fontSize: "25px",
+                fontFamily: "system-ui",
+              }}
+            >
               Parent Assurance is an application developed to allow parents to
               monitor and track their child since the moment they get on the
-              buss until they arrive at school and the same on their way back home.
+              buss until they arrive at school and the same on their way back
+              home.
               <br />
               <br />
               The parent will be able to:
             </p>
-            <ul style={{
-              outline: 'none',
-              textAlign: 'center',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              fontSize: '25px',
-              fontFamily: 'system-ui'
-            }}>
+            <ul
+              style={{
+                outline: "none",
+                textAlign: "center",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                fontSize: "25px",
+                fontFamily: "system-ui",
+              }}
+            >
               <li>
                 Know the time their child get on or off the bus, what bus and
                 the bus driver.
