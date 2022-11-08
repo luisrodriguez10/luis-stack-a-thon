@@ -90,7 +90,8 @@ class Driving extends Component {
     let studentsBus;
     let parentStudents;
     if (auth.roleId === 1) {
-      driverBuses = buses.filter((bus) => bus.userId === auth.id);
+      // driverBuses = buses.filter((bus) => bus.userId === auth.id);
+      driverBuses = buses.filter((bus) => bus.userId === 1);
     }
 
     if (busId > 0) {
@@ -110,6 +111,12 @@ class Driving extends Component {
               Welcome, {auth.firstName} {auth.lastName}
             </h2>
             <h2>Role: {auth.roleId === 1 ? "Driver" : "Parent"}</h2>
+          </div>
+          <div className="intro-move-bus">
+            <p>Instructions to move the bus on the map (After selecting Route and Bus): </p>
+            <p>1: Select a point on the map to simulate the location of the School or the last Bus Stop depending on the Route.</p>
+            <p>2: Start to click on the bus. Each stop will simulate a bus stop.</p>
+            <p>3: Continue to click on the bus until it arrives at school.</p>
           </div>
           <div id="home-driver">
             <select

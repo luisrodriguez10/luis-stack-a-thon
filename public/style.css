@@ -194,6 +194,12 @@ div.username-block > * {
   padding: 0.2rem;
 }
 
+div.intro-move-bus{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 div.password-block{
   display: flex;
   flex-direction: column;
@@ -201,6 +207,36 @@ div.password-block{
 }
 
 div.password-block > * {
+  padding: 0.2rem;
+}
+
+div.email-block{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+div.email-block > * {
+  padding: 0.2rem;
+}
+
+div.firstName-block{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+div.firstName-block > * {
+  padding: 0.2rem;
+}
+
+div.role-block{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+div.role-block > * {
   padding: 0.2rem;
 }
 

@@ -28,9 +28,9 @@ const Navbar = ({ handleClick, isLoggedIn, auth, history }) => {
           </Link>
         </div>
       ) : (
-        <div>
+        <div id="nav-parent">
           <Link to="/login" className={pathName === "/login" ? "selected" : ""}>LOGIN</Link>
-          {/* <Link to="/signup">Sign Up</Link> */}
+          <Link to="/signup" className={pathName === "/signup" ? "selected" : ""}>SIGN UP</Link>
         </div>
       )}
     </nav>

@@ -18,6 +18,25 @@ const AuthForm = props => {
           <label htmlFor="password">Password</label>
           <input name="password" type="password" />
         </div>
+        {name === "signup" ? (<div className='firstName-block'>
+          <label htmlFor="firstName">First Name</label>
+          <input name="firstName" type="text" />
+        </div> ) : null}
+        {name === "signup" ? (
+          <div className='email-block'>
+            <label htmlFor="email">
+              <small>Email</small>
+            </label>
+            <input name="email" type="text" />
+          </div>
+        ) : null}
+        { name === 'signup' ? <div className='role-block'>
+          <select name="role">
+            <option value={0}>-- Select a Role --</option>
+            <option value={1}>Driver</option>
+            {/* <option value={2}>Parent</option> */}
+          </select>
+        </div> : null}
         <div className='button-block'>
           <button type="submit">{displayName}</button>
         </div>
@@ -56,7 +75,10 @@ const mapDispatch = (dispatch, {history}) => {
       const formName = evt.target.name
       const username = evt.target.username.value
       const password = evt.target.password.value
-      dispatch(authenticate(username, password, formName, history))
+      const role = formName === "signup" ? evt.target.role.value : null;
+      const firstName = formName === "signup" ? evt.target.firstName.value : null;
+      const email = formName === "signup" ? evt.target.email.value : null;
+      dispatch(authenticate(username, password, formName, role, firstName, email, history))
     }
   }
 }
